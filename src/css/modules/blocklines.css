@@ -1,0 +1,97 @@
+.l-blockWrapper {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.l-blockLines {
+  display: flex;
+  position: absolute;
+  gap: 16px;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  /* max-width: 1240px; */
+  height: 100%;
+  z-index: 1;
+  opacity: 0.3;
+  margin: 0 auto;
+}
+
+.l-blockLines__line {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  &:first-child::before {
+    left: 0;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      #51cbf3 4px,
+      transparent 4px,
+      transparent 8px
+    );
+    background-size: 1px 8px;
+  }
+
+  &:last-child::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background: -o-linear-gradient(
+      top,
+      #51cbf3 4px,
+      transparent 4px,
+      transparent 8px
+    );
+    background: linear-gradient(
+      to bottom,
+      #51cbf3 4px,
+      transparent 4px,
+      transparent 8px
+    );
+    background-size: 1px 8px;
+  }
+}
+
+@media screen and (min-width: 901px) {
+  .l-blockLines__line:nth-child(2)::before {
+    left: -4px;
+  }
+  .l-blockLines__line:nth-child(4)::before {
+    left: -12px;
+  }
+}
+
+@media screen and (min-width: 1201px) {
+  .l-blockLines {
+    /* padding-right: 60px; */
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .l-blockLines .l-blockLines__line:nth-child(-n + 2) {
+    display: none;
+  }
+  .l-blockLines .l-blockLines__line:nth-child(3)::before {
+    left: 0;
+  }
+}
+
+@media screen and (min-width: 601px) {
+  .l-blockLines {
+    /* padding-inline: calc(50% - var(--container-width) / 2); */
+  }
+}

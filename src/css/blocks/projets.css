@@ -1,0 +1,144 @@
+.projets {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: auto;
+  grid-column-gap: 16px;
+  font-size: 0.9rem;
+  line-height: 1.9;
+  padding-block: 10rem;
+
+  h4 strong {
+    opacity: 0.3;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .projets {
+    display: flex;
+    width: 100%;
+    gap: 3rem;
+    flex-direction: column;
+  }
+
+  .projets .title {
+    grid-column: none;
+  }
+
+  .projets .content {
+    --items: 1;
+    grid-template-columns: 1fr;
+    place-items: center;
+  }
+
+  .about > * + * {
+    display: block;
+    padding-inline: 1rem;
+    padding-block: 1rem;
+  }
+}
+
+@media (max-width: 1000px) {
+  .content {
+    display: flex;
+    overflow-x: auto;
+    padding: 1rem;
+    margin: -1rem;
+  }
+
+  .content .card {
+    scroll-snap-type: x proximity;
+    min-width: 250px;
+  }
+}
+
+.title {
+  position: relative;
+  z-index: 5;
+  grid-column: 1 / span 2;
+  h6 {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.content {
+  --items: 2;
+  --gap: 0.5rem;
+  position: relative;
+  z-index: 6;
+  padding: calc(var(--gap) * 0.5);
+  margin: calc(var(--gap) * -0.5);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: calc(var(--gap) * 0.5);
+  grid-column: 3 / span 6;
+  grid-row: 1;
+  display: flex;
+  gap: var(--gap);
+}
+
+.content .card {
+  cursor: pointer;
+  height: max-content;
+  min-width: calc((100% - (var(--items) - 1) * var(--gap)) / var(--items));
+  scroll-snap-align: start;
+  padding: 1rem;
+  border: none;
+  transition: background 0.3s;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+@media (min-width: 1001px) and (pointer: fine) {
+  .content {
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 1000px) {
+  .content {
+    padding: 1rem;
+    margin: -1rem;
+    scroll-padding-inline: 0;
+  }
+  item {
+    scroll-snap-align: center;
+    min-width: 250px;
+  }
+}
+
+button[data-slider-next],
+button[data-slider-prev] {
+  z-index: 11;
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgb(255, 255, 255);
+  background-size: 20px;
+  top: 50%;
+  left: 20%;
+  margin-top: -25px;
+  cursor: pointer;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+button[data-slider-prev] {
+  background: rgb(255, 255, 255);
+  background-size: 20px;
+  right: 0;
+  left: 5px;
+}
+
+@media (max-width: 1000px) {
+  button[data-slider-next],
+  button[data-slider-prev] {
+    display: none;
+  }
+}

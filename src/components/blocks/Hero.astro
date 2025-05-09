@@ -1,0 +1,100 @@
+<section class="l-blockWrapper">
+  <div class="heading">
+    <div class="left">
+      <h1>CHEZ DURAND,<br /><span>NOUS CONSTRUISONS VOS RÊVES</span></h1>
+    </div>
+  </div>
+  <div class="l-blockLines">
+    <div class="l-blockLines__line"></div>
+    <div class="l-blockLines__line"></div>
+    <div class="l-blockLines__line"></div>
+  </div>
+  <div class="banner">
+    <div class="card">
+      <div class="description">
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia
+          possimus obcaecati magnam totam! Repellat nemo placeat cum.
+        </p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="small">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia
+        possimus obcaecati magnam totam! Repellat nemo placeat cum, harum
+        aliquid vero officiis! Laborum explicabo perspiciatis earum repellat
+        quod officiis dignissimos? Deserunt.
+      </div>
+    </div>
+    <div class="card">
+      <button class="btn btn-secondary"
+        >Voir mes projet
+        <svg
+          width="24"
+          height="24"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"><path d="M16 12L10 18V6L16 12Z"></path></svg
+        >
+      </button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .banner {
+    position: relative;
+    z-index: 2;
+    color: var(--color-white);
+    height: auto;
+    background-color: var(--contrast);
+    min-height: 200px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
+  }
+
+  @media screen and (min-width: 1000px) {
+    .banner {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .banner .card,
+  .banner .card:last-child {
+    display: grid;
+    place-items: center;
+    position: relative;
+    padding: 1rem;
+
+    padding-left: calc(var(--space) + 44 * ((100vw - 601px) / 600));
+
+    &:last-child {
+      padding: 0;
+    }
+  }
+
+  .banner .card .description p {
+    font-size: 14px;
+  }
+
+  @media screen and (max-width: 900px) {
+    .banner {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 700px) {
+    .banner {
+      display: flex;
+      gap: 1em;
+      align-items: flex-start;
+      flex-direction: column;
+      padding: 1rem;
+    }
+
+    .banner .card,
+    .banner .card:last-child:last-child {
+      padding: inherit;
+    }
+  }
+</style>

@@ -1,0 +1,110 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout>
+  <div class="container about">
+    <section class="l-blockWrapper">
+      <div class="l-blockLines container">
+        <div class="l-blockLines__line"></div>
+        <div class="l-blockLines__line"></div>
+        <div class="l-blockLines__line"></div>
+      </div>
+      <div>
+        <div class="top">
+          <h1>A propos</h1>
+          <img src="/src/assets/1.jpg" alt="" />
+        </div>
+        <div class="separator"></div>
+        <div class="content">
+          <div class="block-1">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+            Perspiciatis molestiae mollitia numquam temporibus error facere,
+            deserunt reiciendis amet adipisci quasi tempore dolore non
+            exercitationem libero illum! Necessitatibus incidunt fugiat
+            distinctio.
+          </div>
+          <div class="block-2">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quam dicta
+            molestias iste blanditiis tenetur ab rem qui praesentium sunt
+            facilis accusamus magnam, doloremque laboriosam excepturi beatae
+            obcaecati, repellendus in nihil!
+          </div>
+          <div class="block-3">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus
+            nulla distinctio commodi porro nihil voluptatibus laboriosam earum
+            iusto veritatis, vitae molestias atque, debitis ab doloremque,
+            facere ducimus! Exercitationem, iusto distinctio!
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .about {
+    position: relative;
+    z-index: 12;
+  }
+
+  .about .top {
+    position: relative;
+    z-index: 13;
+    display: grid;
+    height: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
+    img {
+      padding-top: 5rem;
+      margin: 11px 11px 0 11px;
+      grid-column: 3;
+      grid-row-start: none;
+    }
+  }
+
+  @media screen and (max-width: 700px) {
+    .about .top {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .about .content {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 0 1rem 1rem;
+
+      & > * + * {
+        padding: 0;
+        margin-left: 0;
+      }
+    }
+
+    .separator {
+    }
+  }
+
+  .separator {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 1px;
+    margin-block: 1rem;
+    background: rgba(0, 0, 0, 0.094);
+  }
+
+  .content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 1rem 2rem 2rem 2rem;
+
+    & > * + * {
+      margin-left: 0.5rem;
+    }
+
+    & > * + *:last-child {
+      margin-left: 1.5rem;
+    }
+  }
+</style>
