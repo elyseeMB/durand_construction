@@ -2,13 +2,8 @@
 import { Value } from "../Value.tsx";
 ---
 
-<section class="l-blockWrapper">
+<section>
   <div class="about">
-    <div class="l-blockLines">
-      <div class="l-blockLines__line"></div>
-      <div class="l-blockLines__line"></div>
-      <div class="l-blockLines__line"></div>
-    </div>
     <h6 class="title">--ABOUT--</h6>
     <div class="content">
       <h4>
@@ -46,7 +41,6 @@ import { Value } from "../Value.tsx";
 <style>
   .about {
     position: relative;
-    background-color: var(--durand-background);
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: auto;
@@ -66,8 +60,7 @@ import { Value } from "../Value.tsx";
       pointer-events: none;
       z-index: 1;
       opacity: 0.2;
-      background: url("../../assets/background.svg") center center / cover
-        no-repeat;
+      background-color: var(--contrast);
       object-fit: cover;
       filter: grayscale(1);
       transition: all 0.3s;

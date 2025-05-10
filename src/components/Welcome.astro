@@ -3,15 +3,109 @@ import About from "./blocks/About.astro";
 import Services from "./blocks/Services.astro";
 import Projets from "./blocks/Projets.astro";
 import Hero from "./blocks/Hero.astro";
+import { PhotoGrid } from "../components/PhotoGrid.tsx";
+import { useFetch } from "../../functions/data.ts";
+
+const data = await fetch("https://patchworkarchitecture.co.nz/rss");
+const rss = await data.text();
+console.log(rss);
 ---
 
 <section class="hero">
+  <Hero />
+
   <div class="container">
-    <Hero />
+    <div class="description">
+      <div class="text-description">
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum, ducimus
+          est quibusdam
+        </p>
+      </div>
+    </div>
+    {
+      Array.from({ length: 3 }, (_, k) => (
+        <div class="gallery">
+          <h5>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h5>
+          <PhotoGrid
+            maxRows={Math.max(k + 1)}
+            client:load
+            rss={rss}
+            rowHeight={120}
+            gap="0.75rem"
+          />
+        </div>
+      ))
+    }
   </div>
-</section>
-<section class="container">
-  <About />
 </section>
 <Services />
 <Projets />
+
+<style>
+  .hero {
+    padding-block: 2rem;
+  }
+
+  .description {
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .description .text-description {
+    grid-column: 4 / span 5;
+
+    p {
+      color: var(--accents-8);
+    }
+  }
+
+  .container .gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-block: 4rem;
+  }
+  .container {
+    img {
+      max-width: none;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      transition: all 0.3s;
+    }
+
+    img.active {
+      transform: scale(1.1);
+    }
+
+    .line {
+      opacity: 0;
+    }
+    .line.animate {
+      opacity: 1;
+      animation: ItemIn 0.5s both;
+    }
+  }
+
+  @view-transition {
+    navigation: auto;
+  }
+
+  @keyframes ItemIn {
+    0% {
+      opacity: 0;
+      filter: blur(50px);
+    }
+  }
+
+  .transition {
+    transition-property: color, background-color, border-color,
+      text-decoration-color, fill, stroke, opacity, box-shadow, transform,
+      filter, backdrop-filter;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 0.15s;
+  }
+</style>

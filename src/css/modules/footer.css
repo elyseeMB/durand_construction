@@ -8,8 +8,8 @@
 }
 
 .footer {
-  color: var(--color-white);
-  background-color: var(--contrast);
+  background-color: var(--durand-orange);
+  color: var(--accents-8);
   padding-block: var(--space-4);
   margin-top: auto;
 }

@@ -1,100 +1,98 @@
-<section class="l-blockWrapper">
-  <div class="heading">
-    <div class="left">
-      <h1>CHEZ DURAND,<br /><span>NOUS CONSTRUISONS VOS RÊVES</span></h1>
-    </div>
-  </div>
-  <div class="l-blockLines">
-    <div class="l-blockLines__line"></div>
-    <div class="l-blockLines__line"></div>
-    <div class="l-blockLines__line"></div>
-  </div>
-  <div class="banner">
-    <div class="card">
-      <div class="description">
+<section>
+  <div class="container">
+    <div class="description">
+      <div class="arrow">→</div>
+      <div class="left">
+        <h3>CHEZ DURAND,<br /><span>NOUS CONSTRUISONS VOS RÊVES</span></h3>
+      </div>
+
+      <div class="approach">
+        <span>Approach</span>
+        <span class="indication">→</span>
+      </div>
+      <div class="text-description">
         <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia
-          possimus obcaecati magnam totam! Repellat nemo placeat cum.
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum, ducimus
+          est quibusdam quam similique accusamus aspernatur, alias repellendus a
+          voluptates natus sed doloribus? Harum a iure doloremque exercitationem
+          molestias magni. Lorem ipsum, dolor sit amet consectetur adipisicing
+          elit. Quae itaque maxime possimus asperiores officiis corrupti, modi,
+          repellat vel dolorum excepturi tenetur, aliquam adipisci cum
+          recusandae nihil esse est libero temporibus?
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi,
+          possimus! Debitis enim veniam magnam deleniti dolor ratione deserunt
+          officiis cupiditate soluta unde sint corporis fugit animi a, beatae
+          quidem sit! Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Culpa vel ad consectetur soluta tenetur, maxime officiis quis
+          perspiciatis, harum corrupti corporis maiores aperiam repellat vitae
+          rem laboriosam sunt, dolor perferendis.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero ad rerum
+          voluptatum cum, cupiditate, ducimus eligendi laborum illo magni
+          maiores voluptatibus! Ducimus qui totam quo quod enim aut officia vel?
         </p>
       </div>
-    </div>
-    <div class="card">
-      <div class="small">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia
-        possimus obcaecati magnam totam! Repellat nemo placeat cum, harum
-        aliquid vero officiis! Laborum explicabo perspiciatis earum repellat
-        quod officiis dignissimos? Deserunt.
-      </div>
-    </div>
-    <div class="card">
-      <button class="btn btn-secondary"
-        >Voir mes projet
-        <svg
-          width="24"
-          height="24"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="currentColor"><path d="M16 12L10 18V6L16 12Z"></path></svg
-        >
-      </button>
     </div>
   </div>
 </section>
 
 <style>
-  .banner {
-    position: relative;
-    z-index: 2;
-    color: var(--color-white);
-    height: auto;
-    background-color: var(--contrast);
-    min-height: 200px;
+  .description {
+    padding: 0;
+    margin: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
+    grid-template-columns: repeat(5, 1fr);
   }
 
-  @media screen and (min-width: 1000px) {
-    .banner {
-      grid-template-columns: repeat(3, 1fr);
+  .description .arrow {
+    letter-spacing: -0.02em;
+    font-size: 2.75rem;
+    line-height: 1.13;
+    grid-column: 1;
+  }
+
+  .description .left {
+    grid-column: 2 / span 5;
+
+    h3 {
+      letter-spacing: -0.02em;
+      font-size: 2.75rem;
+      line-height: 1.13;
     }
   }
 
-  .banner .card,
-  .banner .card:last-child {
-    display: grid;
-    place-items: center;
-    position: relative;
-    padding: 1rem;
+  .description .approach {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    grid-column: 2;
 
-    padding-left: calc(var(--space) + 44 * ((100vw - 601px) / 600));
-
-    &:last-child {
-      padding: 0;
+    span.indication {
+      font-size: 5rem;
+      width: max-content;
+      height: auto;
+      transform: rotate(90deg);
+      margin-bottom: 1rem;
+      color: var(--accents-4);
     }
   }
 
-  .banner .card .description p {
-    font-size: 14px;
+  .description .text-description {
+    grid-column: 4 / span 5;
   }
 
-  @media screen and (max-width: 900px) {
-    .banner {
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    }
+  .description .text-description,
+  .approach {
+    padding-block: 6rem;
   }
 
-  @media screen and (max-width: 700px) {
-    .banner {
-      display: flex;
-      gap: 1em;
-      align-items: flex-start;
-      flex-direction: column;
-      padding: 1rem;
-    }
+  .description p {
+    font-size: 0.8rem;
+    color: var(--accents-6);
 
-    .banner .card,
-    .banner .card:last-child:last-child {
-      padding: inherit;
-    }
+    margin-bottom: 1rem;
   }
 </style>
