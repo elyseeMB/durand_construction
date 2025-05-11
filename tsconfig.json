@@ -8,6 +8,8 @@
     "dist"
   ],
   "compilerOptions": {
-    "jsxImportSource": "preact"
+    "jsxImportSource": "preact",
+    "strictNullChecks": true, // add if using `base` template
+    "allowJs": true // required, and included with all Astro templates
   }
 }

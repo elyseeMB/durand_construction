@@ -1,26 +1,188 @@
-<div class="container">
+<div class="bg-color container">
   <div class="services">
-    <div class="title">
-      <h6>--SERVICES--</h6>
-      <p class="small">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil quisquam
-        adipisci a dolore corporis aperiam nemo unde ad autem nesciunt ut ullam
-        voluptate officia quaerat excepturi, at quos vero perferendis?
-      </p>
-    </div>
-    <div class="content">
-      {
-        Array.from({ length: 4 }, (_, k) => (
-          <div class="card">
-            <div class="icon bold">Logo</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos amet,
-            numquam unde minima culpa quae delectus adipisci iste vel officia
-            quo dicta laboriosam eligendi aperiam sunt possimus error a odio!
-          </div>
-        ))
-      }
+    <div class="description">
+      <div class="left">
+        <h3>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate
+          tempore voluptate ratione sequi quasi obcaecati.
+        </h3>
+      </div>
+
+      <div class="approach">
+        <ul>
+          <li>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi
+            magnam amet dolores harum! Minus ut ex ipsum numquam molestias quae
+            ipsam accusamus est perspiciatis placeat? Tempore obcaecati quis ut
+            deserunt.
+          </li>
+          <li>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
+            quisquam at debitis unde error voluptates illum ut dicta corrupti
+            molestias omnis labore quos sed, quo possimus sint repudiandae
+            laboriosam iure! Lorem ipsum dolor sit amet consectetur adipisicing
+            elit. Repellendus consequuntur consequatur qui? Commodi assumenda
+            consequuntur veritatis blanditiis, aliquam asperiores omnis, quae
+            nam laudantium adipisci perspiciatis porro quod totam, expedita hic.
+          </li>
+          <li>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Id quo
+            voluptatem hic minus impedit.
+          </li>
+          <li>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni
+            delectus recusandae rerum. Recusandae quibusdam quaerat esse tempora
+            molestias at dicta, aspernatur ullam optio impedit molestiae, magni
+            in rerum quis quia?
+          </li>
+          <li>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Distinctio
+            eveniet mollitia ipsa voluptatibus commodi, atque laboriosam optio
+            tempora itaque aliquam, ab cumque doloribus natus numquam deserunt!
+            Voluptates vitae suscipit debitis. Lorem ipsum dolor, sit amet
+            consectetur adipisicing elit. Consectetur est voluptatem nulla
+            debitis impedit vero provident, architecto voluptas aperiam
+            similique qui, laudantium consequatur, ratione nisi odit. Ad rerum
+            fugiat voluptatibus.
+          </li>
+        </ul>
+
+        <div class="arrow-2">→</div>
+      </div>
+      <div class="image">
+        <img
+          src="https://freight.cargo.site/w/600/q/75/i/5c8f18e60e3fba23a9fe91586d33f69b081d386e6a86351ec537fd7a5005921f/10x10.570.jpg"
+          alt=""
+        />
+      </div>
+
+      <div class="text-description">
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum, ducimus
+          est quibusdam quam similique accusamus aspernatur, alias repellendus a
+          voluptates natus sed doloribus? Harum a iure doloremque exercitationem
+          molestias magni. Lorem ipsum, dolor sit amet consectetur adipisicing
+          elit. Quae itaque maxime possimus asperiores officiis corrupti, modi,
+          repellat vel dolorum excepturi tenetur, aliquam adipisci cum
+          recusandae nihil esse est libero temporibus?
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi,
+          possimus! Debitis enim veniam magnam deleniti dolor ratione deserunt
+          officiis cupiditate soluta unde sint corporis fugit animi a, beatae
+          quidem sit! Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Culpa vel ad consectetur soluta tenetur, maxime officiis quis
+          perspiciatis, harum corrupti corporis maiores aperiam repellat vitae
+          rem laboriosam sunt, dolor perferendis.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero ad rerum
+          voluptatum cum, cupiditate, ducimus eligendi laborum illo magni
+          maiores voluptatibus! Ducimus qui totam quo quod enim aut officia vel?
+        </p>
+      </div>
     </div>
   </div>
 </div>
 
-<style></style>
+<style>
+  .bg-color {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: var(--durand-orange);
+    padding-block: 10rem;
+    color: var(--accents-8);
+  }
+
+  .description {
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    row-gap: 5rem;
+  }
+
+  .description .arrow {
+    letter-spacing: -0.02em;
+    font-size: 2.75rem;
+    line-height: 1.13;
+    grid-column: 1;
+  }
+
+  .description .arrow-2 {
+    width: max-content;
+    height: auto;
+    letter-spacing: -0.02em;
+    font-size: 2.75rem;
+    line-height: 1.13;
+  }
+
+  .description .left {
+    grid-column: 1 / span 5;
+
+    h3 {
+      letter-spacing: -0.02em;
+      font-size: 2.75rem;
+      line-height: 1.13;
+    }
+  }
+
+  .description .approach {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    grid-column: 2 / span 2;
+    gap: 5rem;
+
+    & ul {
+      max-width: 300px;
+      display: flex;
+      flex-direction: column;
+
+      & > * {
+        position: relative;
+        margin-bottom: 1rem;
+        font-size: 0.8rem;
+        line-height: 1.5;
+        list-style: auto;
+      }
+    }
+
+    span.indication {
+      font-size: 2.75rem;
+      width: max-content;
+      height: auto;
+      transform: rotate(90deg);
+      margin-bottom: 1rem;
+    }
+
+    &:last-child {
+      color: red !important;
+    }
+  }
+
+  .description .image {
+    grid-column: 4 / span 5;
+    & img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .description .text-description {
+    grid-column: 4 / span 5;
+  }
+
+  /* .description .text-description,
+  .approach,
+  .description .image {
+    padding-block: 6rem;
+  } */
+
+  .description p {
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
+</style>

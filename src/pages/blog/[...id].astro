@@ -1,0 +1,48 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection, render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import { getEntry } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+// const entry = await getEntry("blog", "welcome");
+
+// const { id, collection } = entry!.data.author;
+
+// const author = await getEntry(collection, id);
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection("blog", ({ data }) => {
+    return import.meta.env.PROD ? data.isDraft !== true : true;
+  });
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}) satisfies GetStaticPaths;
+const { post } = Astro.props;
+
+const { Content, headings } = await render(post);
+
+console.log(post);
+---
+
+<Layout>
+  <div>hello world !</div>
+  <div>
+    <!-- {
+      posts.map((post) => (
+        <li>
+          ecrit par : {author?.data.name}
+          <a href={`/blog/${post.id}`}>{post.data.title}</a>
+        </li>
+      ))
+    } -->
+
+    <Content />
+  </div>
+</Layout>
