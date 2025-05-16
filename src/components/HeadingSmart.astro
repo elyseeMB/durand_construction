@@ -1,0 +1,33 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<div class="left">
+  <h3>
+    {title}<br />
+  </h3>
+  <h3>
+    <span>{description}</span>
+  </h3>
+</div>
+
+<style>
+  .left {
+    grid-column: 1 / span 5;
+    padding-block: var(--space);
+
+    h3 {
+      --line-height: 1.13;
+      --size: 2.75rem;
+      position: relative;
+      letter-spacing: -0.02em;
+      font-size: var(--size);
+      line-height: var(--line-height);
+    }
+  }
+</style>

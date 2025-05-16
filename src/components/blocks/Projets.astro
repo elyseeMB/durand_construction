@@ -1,118 +1,133 @@
 ---
-import { Card } from "../ui/Card.tsx";
-import { Carousel } from "../ui/Carousel.tsx";
+import { getCollection } from "astro:content";
+import HeadingSmart from "../HeadingSmart.astro";
+import BottomPage from "./BottomPage.astro";
+import { getEntry } from "astro:content";
+
+const articles = await getCollection("blog", ({ data }) => {
+  return !!data.thumbnail;
+});
+
+const doc = await Promise.all(
+  articles.map(async (article) => {
+    const taxonomies = article.data.taxonomies 
+      ? await Promise.all(article.data.taxonomies.map(taxonomy => 
+          getEntry(taxonomy.collection, taxonomy.id)
+        ))
+      : [];
+    const author = await getEntry(article.data.author.collection, article.data.author.id);
+    return {
+      article,
+      taxonomies,
+      author
+    };
+  })
+);
+
+
 ---
 
-<div class="container">
-  <div class="projets" data-slider>
-    <div class="title">
-      <h6>--PROJETS--</h6>
-      <p class="small">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil quisquam
-        adipisci a dolore corporis aperiam nemo unde ad autem nesciunt ut ullam
-        voluptate officia quaerat excepturi, at quos vero perferendis?
-      </p>
+<div class="bg-color container">
+  <HeadingSmart
+    title="NOS DERNIERS ARTICLES,"
+    description="SUIVEZ NOTRE ACTUALITÉ AU CŒUR DE L’ARCHITECTURE ET DU BÂTIMENT"
+  />
+  <BottomPage
+    topic="Blog"
+    classement="4.0"
+    description="nous vous partageons ici l’envers du décor, les tendances qui nous animent et notre approche sur la manière de bâtir intelligemment."
+  >
+    <div class="articles">
+      {
+        doc.map(({article, author, taxonomies}) => (
+            <a href={`/blog/${article.id}`}>
+          <article>
+            <span class="tags">
+              {taxonomies?.map(taxonomy  => (
+              <span class="tag"> {taxonomy?.data.name} </span>
+            ))}
+            </span>
+              <div class="thumbnail">
+              <img src={article.data.thumbnail} alt="" />
+            </div>
+            <div> {article.data.title} </div>
+            <span> {author?.data.name} </span>
+           
+          </article>
+            </a>
+        ))
+      }
     </div>
-    <Carousel client:visible />
-  </div>
+  </BottomPage>
 </div>
 
-<!-- 
 <style>
-  .projets {
+  
+
+  .bg-color {
+    color: black !important
     position: relative;
-    z-index: 10;
+    width: 100%;
+    height: 100%;
+    background-color: var(--durand-orange);
+    color: var(--accents-8);
+  }
+
+  .articles {
+    font-size: var(--size-small-text);
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: auto;
-    grid-column-gap: 16px;
-    font-size: 0.9rem;
-    line-height: 1.9;
-    padding-block: 10rem;
+    grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
+    gap: 0.5rem;
 
-    h4 strong {
-      opacity: 0.3;
-    }
-  }
-
-  @media screen and (max-width: 500px) {
-    .projets {
-      display: flex;
-      width: 100%;
-      gap: 3rem;
-      flex-direction: column;
-    }
-
-    .projets .title {
-      grid-column: none;
-    }
-
-    .projets .content {
+    article {
+      display: grid;
       grid-template-columns: 1fr;
-      place-items: center;
-    }
-
-    .about > * + * {
-      display: block;
-      padding-inline: 1rem;
-      padding-block: 1rem;
-    }
-  }
-
-  @media (max-width: 1000px) {
-    .content {
-      display: flex;
-      overflow-x: auto;
+      background-color: #ffffff0f;
+      gap: 1rem;
       padding: 1rem;
-      margin: -1rem;
     }
 
-    .content .card {
-      scroll-snap-type: x proximity;
-      min-width: 250px;
-    }
-  }
-
-  .title {
-    position: relative;
-    z-index: 5;
-    grid-column: 1 / span 2;
-    h6 {
-      margin-bottom: 0.5rem;
-    }
-  }
-
-  .content {
-    --items: 2;
-    --gap: 1rem;
-    position: relative;
-    z-index: 6;
-    padding: calc(var(--gap) * 0.5);
-    margin: calc(var(--gap) * -0.5);
-    overflow-x: auto;
-    scroll-snap-type: x proximity;
-    scroll-padding-inline: calc(var(--gap) * 0.5);
-    grid-column: 3 / span 6;
-    grid-row: 1;
-    display: flex;
-    gap: var(--gap);
-  }
-
-  .content .card {
-    cursor: pointer;
-    height: max-content;
-    min-width: calc((100% - (var(--items) - 1) * var(--gap)) / var(--items));
-    scroll-snap-align: start;
-    background-color: rgba(130, 130, 130, 0.194);
-    padding: 1rem;
-    border: none;
-    transition: background 0.3s;
-
-    img {
-      display: block;
+    article .thumbnail {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+
+      img {
+        display: block;
+        max-height: 300px;
+      }
+    }
+
+    article .tags {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    align-items: flex-end;
+    gap: 0.5rem;
+
+    .tag {
+      position: relative;
+      display: flex;
+      gap: 0.3rem;
+      position: relative;
+      font-size: 0.7rem;
+      background-color: #ffa50075;
+      border-radius: 0.4rem;
+      display: flex;
+      align-items: center;
+      padding: 5px 3px;
+      width: max-content;
+      
+      
+
+      &::before {
+        content: '';
+        float: 0;
+        display: block;
+        width: 7px;
+        border-radius: 7px;
+        aspect-ratio: 1  / 1;
+        background: #fff;
+      }
     }
   }
-</style> -->
+}
+</style>

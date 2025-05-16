@@ -37,6 +37,7 @@
   --h2: calc(var(--h3) * var(--font-scale));
   --h1: calc(var(--h2) * var(--font-scale));
 
+  --size-small-text: 0.9rem;
   --color-white: #fff;
   --space: 16px;
   --contrast: #3d4596;

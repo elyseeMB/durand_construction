@@ -1,45 +1,50 @@
+---
+import Heading from "../Heading.astro";
+import HeadingSmart from "../HeadingSmart.astro";
+import { PhotoGrid } from "../PhotoGrid.tsx";
+import BottomPage from "./BottomPage.astro";
+const data = await fetch("https://patchworkarchitecture.co.nz/rss");
+const rss = await data.text();
+---
+
 <section>
   <div class="container">
     <div class="description">
-      <div class="arrow">→</div>
-      <div class="left">
-        <h3>CHEZ DURAND,<br /><span>NOUS CONSTRUISONS VOS RÊVES</span></h3>
-      </div>
+      <Heading title="CHEZ DURAND," description="NOUS CONSTRUISONS VOS RÊVES" />
+      <BottomPage
+        topic="approach"
+        classement="1.0"
+        description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum ducimus est quibusdam."
+      >
+        <img
+          src="https://freight.cargo.site/w/600/q/75/i/13959baccd0882a93967ed92da231fc20a5eb518f06858467d31745d70cb545e/Patchwork2.jpg"
+        />
+      </BottomPage>
 
-      <div class="approach">
-        <span>Approach</span>
-        <span class="indication">→</span>
-      </div>
-      <div class="text-description">
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum, ducimus
-          est quibusdam quam similique accusamus aspernatur, alias repellendus a
-          voluptates natus sed doloribus? Harum a iure doloremque exercitationem
-          molestias magni. Lorem ipsum, dolor sit amet consectetur adipisicing
-          elit. Quae itaque maxime possimus asperiores officiis corrupti, modi,
-          repellat vel dolorum excepturi tenetur, aliquam adipisci cum
-          recusandae nihil esse est libero temporibus?
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi,
-          possimus! Debitis enim veniam magnam deleniti dolor ratione deserunt
-          officiis cupiditate soluta unde sint corporis fugit animi a, beatae
-          quidem sit! Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Culpa vel ad consectetur soluta tenetur, maxime officiis quis
-          perspiciatis, harum corrupti corporis maiores aperiam repellat vitae
-          rem laboriosam sunt, dolor perferendis.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero ad rerum
-          voluptatum cum, cupiditate, ducimus eligendi laborum illo magni
-          maiores voluptatibus! Ducimus qui totam quo quod enim aut officia vel?
-        </p>
-      </div>
+      <HeadingSmart description="NOS DERNIERS PROJETS." />
+      <BottomPage
+        topic="approach"
+        classement="2.0"
+        description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum ducimus est quibusdam."
+      >
+        <PhotoGrid
+          maxRows={2}
+          client:load
+          rss={rss}
+          rowHeight={250}
+          gap="0.5rem"
+        />
+      </BottomPage>
     </div>
   </div>
 </section>
 
 <style>
+  :root {
+    --space: 1.5rem;
+    --space-2: calc(var(--space) * 2);
+  }
+
   .description {
     padding: 0;
     margin: 0;
@@ -47,52 +52,101 @@
     grid-template-columns: repeat(5, 1fr);
   }
 
-  .description .arrow {
-    letter-spacing: -0.02em;
-    font-size: 2.75rem;
-    line-height: 1.13;
-    grid-column: 1;
-  }
-
   .description .left {
-    grid-column: 2 / span 5;
+    grid-column: 1 / span 5;
+    padding-block: var(--space);
 
     h3 {
+      --line-height: 1.13;
+      --size: 2.75rem;
+      position: relative;
       letter-spacing: -0.02em;
-      font-size: 2.75rem;
-      line-height: 1.13;
+      font-size: var(--size);
+      line-height: var(--line-height);
+      text-indent: 2.5rem;
+
+      &:last-child {
+        margin-inline: -3px;
+        text-indent: 0;
+      }
+
+      &:first-child:before {
+        --size-before: 1.5rem;
+        position: absolute;
+        content: "";
+        inset: 0;
+        left: 0;
+        top: calc((var(--size) * var(--line-height) - var(--size-before)) / 2);
+        width: var(--size-before);
+        aspect-ratio: 1 / 1;
+        border-radius: 5rem;
+        background: #fff;
+      }
     }
   }
 
-  .description .approach {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    grid-column: 2;
+  .bottom {
+    border-top: 1px solid white;
+    padding-block: var(--space);
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-column: 1 / span 5;
 
-    span.indication {
-      font-size: 2.75rem;
-      width: max-content;
-      height: auto;
-      transform: rotate(90deg);
+    .content {
+      grid-column: 1 / span 5;
+      max-height: 400px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .text-description {
+      grid-column: 4 / span 5;
+    }
+
+    .description p {
+      font-size: 0.8rem;
+      color: var(--accents-6);
+
       margin-bottom: 1rem;
-      color: var(--accents-4);
     }
   }
 
-  .description .text-description {
-    grid-column: 4 / span 5;
+  .bottom .info {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-column: 1 / span 5;
+    padding-bottom: var(--space-3);
+
+    .approach {
+      --line-height: 1;
+      display: flex;
+      align-items: flex-start;
+      grid-column: 2 / span 2;
+      text-indent: 0.9rem;
+      line-height: 1;
+      gap: 0.5rem;
+    }
+
+    span {
+      width: 10px;
+      height: 10px;
+      position: relative;
+    }
+
+    .text-description {
+      grid-column: 4 / span 2;
+    }
   }
 
-  .description .text-description,
-  .approach {
-    padding-block: 6rem;
-  }
-
-  .description p {
-    font-size: 0.8rem;
-    color: var(--accents-6);
-
-    margin-bottom: 1rem;
+  .bottom .info p,
+  p,
+  .bottom .info {
+    font-size: var(--size-small-text);
+    font-weight: 600;
   }
 </style>
