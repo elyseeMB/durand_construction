@@ -4,8 +4,16 @@ import { useFetch } from "../../functions/data.ts";
 import Footer from "../components/Footer.astro";
 import Welcome from "../components/Welcome.astro";
 import Layout from "../layouts/Layout.astro";
+
+const seo = {
+  title: "Accueil",
+  description:
+    "Bienvenue chez Durand Construction, expert en architecture et bâtiment durable.",
+  image: "https://durand-construction.com/og-image.jpg",
+  url: "https://durand-construction.com",
+};
 ---
 
-<Layout>
+<Layout {...seo}>
   <Welcome />
 </Layout>

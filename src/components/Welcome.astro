@@ -8,7 +8,6 @@ import { useFetch } from "../../functions/data.ts";
 
 const data = await fetch("https://patchworkarchitecture.co.nz/rss");
 const rss = await data.text();
-console.log(rss);
 ---
 
 <section class="hero">
@@ -31,8 +30,8 @@ console.log(rss);
             maxRows={Math.max(k + 1)}
             client:load
             rss={rss}
-            rowHeight={120}
-            gap="0.75rem"
+            rowHeight={150}
+            gap="1rem"
           />
         </div>
       ))
@@ -74,11 +73,11 @@ console.log(rss);
       width: 100%;
       height: auto;
       object-fit: cover;
-      transition: all 0.3s;
+      transition: fitler 0.3s;
     }
 
     img.active {
-      transform: scale(1.1);
+      filter: contrast(0.7);
     }
 
     .line {

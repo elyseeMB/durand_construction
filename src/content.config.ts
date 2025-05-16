@@ -7,12 +7,25 @@ const blog = defineCollection({
   schema: z.object({
     title: z.string(),
     slug: z.string().optional(),
-    isDraft: z.boolean(),
+    isDraft: z.boolean().default(false),
+    taxonomies: z.array(reference("taxonomies")).optional(),
+    thumbnail: z.string().optional(),
+    description: z.string().optional(),
     // description: z.string(),
     // pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     author: reference("authors"),
     relatedPosts: z.array(reference("blog")).optional(),
+    seo: z
+      .object({
+        title: z.string().optional(),
+        description: z.string().optional(),
+        image: z.string().optional(),
+        canonicalURL: z.string().url().optional(),
+        typeContent: z.string().optional().default("website"),
+        tags: z.array(z.string()).optional(),
+      })
+      .optional(),
   }),
 });
 
@@ -24,4 +37,12 @@ const authors = defineCollection({
   }),
 });
 
-export const collections = { blog, authors };
+const taxonomies = defineCollection({
+  loader: glob({ pattern: "**/[^_]*.json", base: "./src/data/taxonomies" }),
+  schema: z.object({
+    name: z.string(),
+    // posts: z.array(reference("blog")).optional(),
+  }),
+});
+
+export const collections = { blog, authors, taxonomies };

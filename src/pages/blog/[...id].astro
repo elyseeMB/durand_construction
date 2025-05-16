@@ -9,12 +9,6 @@ interface Props {
   post: CollectionEntry<"blog">;
 }
 
-// const entry = await getEntry("blog", "welcome");
-
-// const { id, collection } = entry!.data.author;
-
-// const author = await getEntry(collection, id);
-
 export const getStaticPaths = (async () => {
   const posts = await getCollection("blog", ({ data }) => {
     return import.meta.env.PROD ? data.isDraft !== true : true;
@@ -24,17 +18,32 @@ export const getStaticPaths = (async () => {
     props: { post },
   }));
 }) satisfies GetStaticPaths;
+
 const { post } = Astro.props;
 
 const { Content, headings } = await render(post);
 
-console.log(post);
+const { seo: seoProps, slug, title, taxonomies, thumbnail, author } = post.data;
+
+const getTaxonomies = await Promise.all(
+  taxonomies
+    ? taxonomies?.map(
+        async (taxonomy) => await getEntry(taxonomy.collection, taxonomy.id)
+      )
+    : []
+);
+
+const metaData = {
+  title: post.data.title,
+  description: post.data.description,
+  image: post.data.thumbnail,
+  url: Astro.url.href,
+};
+const seo = seoProps ? seoProps : metaData;
 ---
 
-<Layout>
-  <div>hello world !</div>
-  <div>
-    <!-- {
+<Layout {...seo}>
+  <!-- {
       posts.map((post) => (
         <li>
           ecrit par : {author?.data.name}
@@ -43,6 +52,166 @@ console.log(post);
       ))
     } -->
 
-    <Content />
+  <div class="container-narrow">
+    <div class="info">
+      <h1>{title}</h1>
+      <div class="tags">
+        {
+          getTaxonomies.map((taxonomy) => (
+            <div class="tag"> {taxonomy?.data.name} </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="container heading">
+    <div class="cover">
+      <img src={thumbnail} alt="" />
+    </div>
+  </div>
+
+  <div class="container-narrow">
+    <div class="content">
+      <Content />
+    </div>
   </div>
 </Layout>
+
+<style>
+  :root {
+    --title-1: 2rem;
+    --title-2: 1.7rem;
+    --title-3: 1.2rem;
+    --paragarph-size: 0.9rem;
+    --paragraph-color: var(--accents-7);
+    --small-size: 0.8rem;
+    --border: var(--accents-2);
+  }
+
+  .heading {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding-block: 5rem;
+
+    img {
+      width: 100%;
+      height: 100%;
+      max-height: 300px;
+      object-fit: cover;
+    }
+  }
+
+  .container-narrow .info {
+    padding-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+
+    h1 {
+      color: var(--paragraph-color);
+      font-size: var(--title-1);
+    }
+  }
+
+  .container-narrow .tags {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+
+    .tag {
+      font-size: 0.7rem;
+      border-radius: 0.4rem;
+      line-height: 0.3;
+      padding: 10px 3px;
+      background: var(--durand-orange);
+    }
+  }
+
+  .container-narrow {
+    position: relative;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+
+    h2 {
+      padding: 0;
+      margin: 0;
+      color: var(--paragraph-color);
+      font-size: var(--title-2);
+    }
+
+    h3 {
+      padding: 0;
+      margin: 0;
+      font-size: var(--title-3);
+      color: var(--paragraph-color);
+      font-weight: 700;
+    }
+
+    p {
+      color: var(--paragraph-color);
+      font-size: var(--paragarph-size);
+      line-height: 1.8;
+    }
+
+    hr {
+      height: 1px;
+      background: var(--accents-2);
+      margin: 0;
+      padding: 0;
+      border: none;
+    }
+
+    table {
+      font-size: var(--paragarph-size);
+      display: table;
+    }
+
+    table th,
+    td,
+    tr {
+      padding: 1rem;
+      border: 1px solid var(--border);
+    }
+
+    table thead {
+      text-align: left;
+      font-weight: 700;
+    }
+
+    table td {
+      vertical-align: top;
+    }
+  }
+
+  .container-narrow .content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding-bottom: 5rem;
+  }
+
+  .container-narrow .content {
+    ul {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      padding-left: 50px;
+      font-size: var(--paragarph-size);
+    }
+
+    ul > * {
+      list-style: decimal;
+    }
+
+    img {
+      max-height: 350px;
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+  }
+</style>

@@ -1,37 +1,37 @@
 .header {
-  background-color: var(--durand-background);
+  background-color: transparent;
   position: relative;
   font-weight: 500;
   line-height: 1;
-  padding-top: var(--space-1);
+  padding-block: var(--space-1);
   z-index: 5;
   display: flex;
   align-items: center;
   justify-content: space-between;
   --border-header: rgb(226, 226, 226);
 
-  &::before {
+  /* &::before {
     content: "";
     position: absolute;
     width: 100%;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: var(--border-header);
+    background-color: var(--durand-orange);
     max-width: var(--container-width);
     margin-inline: auto;
     height: 1px;
-  }
+  } */
 }
 
 .header ul {
-  font-size: 12px;
+  font-size: 0.8rem;
   display: flex;
   align-items: center;
 }
 
 .header-nav {
-  height: 40px;
+  /* height: 40px; */
   overflow: hidden;
 }
 
@@ -56,7 +56,8 @@
 
 .header a:hover,
 .header button {
-  color: black;
+  text-decoration: underline;
+  color: var(--durand-orange);
 }
 
 .header-nav > * + * {
@@ -110,7 +111,7 @@
 }
 
 .header .header-nav li {
-  display: none;
+  /* display: none; */
 }
 
 .header.is-open {
@@ -180,6 +181,11 @@
   right: 0;
   top: 0;
   z-index: 4;
+}
+
+.header-logo svg {
+  width: 40px;
+  height: 40px;
 }
 
 .header.is-open .header-logo {

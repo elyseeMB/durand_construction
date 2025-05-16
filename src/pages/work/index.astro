@@ -1,0 +1,61 @@
+---
+import { PhotoGrid } from "../../components/PhotoGrid.tsx";
+import Layout from "../../layouts/Layout.astro";
+const seo = {
+  title: "Nos Réalisations",
+  description:
+    "Découvrez les projets architecturaux et chantiers réalisés par Durand Construction : maisons modernes, bâtiments durables, rénovations sur mesure.",
+  image: "https://durand-construction.com/og-image.jpg",
+  url: Astro.url.href,
+};
+
+const data = await fetch("https://patchworkarchitecture.co.nz/rss");
+const rss = await data.text();
+---
+
+<Layout {...seo}>
+  <div class="wrapper">
+    <div class="container">
+      <div class="heading">
+        <h1>
+          Découvrez nos réalisations architecturales alliant excellence,
+          durabilité et design sur mesure
+        </h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="container projets">
+    {
+      Array.from({ length: 3 }, (_, k) => (
+        <div class="gallery">
+          <h5>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h5>
+          <PhotoGrid
+            maxRows={4 + 1}
+            client:load
+            rss={rss}
+            rowHeight={300}
+            gap="0.5rem"
+          />
+        </div>
+      ))
+    }
+  </div>
+</Layout>
+
+<style>
+  .wrapper {
+  }
+
+  .heading {
+    font-weight: 800;
+    padding-block: 1rem;
+  }
+
+  .container .gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-block: 4rem;
+  }
+</style>

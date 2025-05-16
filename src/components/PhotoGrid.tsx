@@ -1,4 +1,6 @@
+import type { UIEventHandler } from "preact/compat";
 import { useEffect, useRef, useState, useMemo } from "preact/hooks";
+import { Lightbox, useLightbox } from "../hooks/useLightbox.tsx";
 
 // Types pour nos données
 type ImageInfo = {
@@ -6,16 +8,192 @@ type ImageInfo = {
   width: number;
   height: number;
   title?: string;
+  isLoaded?: boolean;
 };
 
 type PhotoGridProps = {
   rss: string;
   rowHeight?: number;
   gap?: string;
-  maxRows: number;
+  maxRows?: number;
 };
 
-// Fonction pour parser le XML RSS
+// Composant pour une ligne d'images - modifié pour utiliser le nouveau hook
+function ImageRow({
+  images,
+  rowHeight,
+  containerWidth,
+  gapSize,
+  index,
+  onImageLoad,
+  getImageIndex,
+  refLightbox,
+}: {
+  images: ImageInfo[];
+  rowHeight: number;
+  containerWidth: number;
+  gapSize: number;
+  index: number;
+  onImageLoad: (rowIndex: number, imgIndex: number) => void;
+  getImageIndex: (rowIndex: number, imgIndex: number) => number; // Fonction pour obtenir l'index global
+  refLightbox: (index: number) => (element: HTMLAnchorElement | null) => void; // Fonction ref du lightbox
+}) {
+  const rowRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Calculer les largeurs proportionnelles pour CSS grid
+  const gridColumns = useMemo(() => {
+    if (images.length === 0) return "";
+
+    // Calculer la largeur de référence pour chaque image
+    let totalAspectRatioSum = 0;
+    images.forEach((img) => {
+      totalAspectRatioSum += img.width / img.height;
+    });
+
+    // Calculer la fraction de largeur pour chaque image
+    return images
+      .map((img) => {
+        const aspectRatio = img.width / img.height;
+        return `${aspectRatio / totalAspectRatioSum}fr`;
+      })
+      .join(" ");
+  }, [images, containerWidth, gapSize]);
+
+  // Observer l'intersection pour l'animation
+  useEffect(() => {
+    if (!rowRef.current) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // setIsVisible(true);
+          observer.disconnect();
+        }
+      });
+    });
+
+    observer.observe(rowRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
+  const handleLoadImage: UIEventHandler<HTMLImageElement> = (e) => {
+    const target = e.target as HTMLImageElement;
+    const imgIndex = parseInt(target.dataset.index || "0", 10);
+
+    // Notifier le parent que l'image est chargée
+    onImageLoad(index, imgIndex);
+
+    // Masquer le skeleton
+    if (target.previousElementSibling) {
+      (target.previousElementSibling as HTMLElement).style.display = "none";
+    }
+
+    // Afficher l'image
+    target.style.opacity = "1";
+  };
+
+  return (
+    <div
+      ref={rowRef}
+      className={`image-row ${isVisible ? "animate" : ""}`}
+      style={{
+        display: "grid",
+        gridTemplateColumns: gridColumns,
+        gap: `${gapSize}rem`,
+        height: `${rowHeight}px`,
+        transition: "opacity 0.5s, filter 0.5s",
+      }}
+    >
+      {images.map((img, imgIndex) => {
+        const aspectRatio = img.width / img.height;
+        // Obtenir l'index global de cette image dans toute la galerie
+        const globalIndex = getImageIndex(index, imgIndex);
+
+        return (
+          <a
+            ref={refLightbox(globalIndex)} // Utiliser la fonction ref avec l'index global correct
+            key={`${index}-${imgIndex}`}
+            href={img.src} // Modifié pour utiliser directement l'URL de l'image
+            style={{
+              height: "100%",
+              display: "block",
+              overflow: "hidden",
+              viewTransitionName: `image-${index}-${imgIndex}`,
+              "--index": `${globalIndex}`,
+              position: "relative",
+            }}
+          >
+            {/* Skeleton qui s'affiche pendant le chargement */}
+            <Skeleton aspectRatio={aspectRatio} />
+
+            {/* Image réelle qui devient visible après chargement */}
+            <img
+              data-index={imgIndex}
+              onLoad={handleLoadImage}
+              onMouseEnter={(ev) => {
+                const element = ev.target as HTMLImageElement;
+                if (ev.isTrusted) {
+                  element.classList.add("active");
+                }
+              }}
+              onMouseLeave={(ev) => {
+                const element = ev.target as HTMLImageElement;
+                if (ev.isTrusted) {
+                  element.classList.remove("active");
+                }
+              }}
+              src={img.src}
+              alt={img.title || ""}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                opacity: "0", // L'image est initialement invisible
+                transition: "opacity 0.3s ease-in-out",
+                position: "absolute",
+                top: 0,
+                left: 0,
+              }}
+            />
+          </a>
+        );
+      })}
+    </div>
+  );
+}
+
+function Skeleton({ aspectRatio }: { aspectRatio: number }) {
+  return (
+    <div
+      className="skeleton-loading"
+      style={{
+        height: "100%",
+        width: "100%",
+        backgroundColor: "var(--accents-2, #f0f0f0)",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      <div
+        className="skeleton-shimmer"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background:
+            "linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent)",
+          animation: "skeleton-loading 1.5s infinite",
+        }}
+      />
+    </div>
+  );
+}
+
+// [Implémentation de parseRSS]
 function parseRSS(rssStr: string): ImageInfo[] {
   try {
     // Créer un parser XML
@@ -42,6 +220,7 @@ function parseRSS(rssStr: string): ImageInfo[] {
           width: img.width,
           height: img.height,
           title,
+          isLoaded: false, // Par défaut, l'image n'est pas chargée
         }));
       })
       .filter((img) => img.src && img.width > 0 && img.height > 0);
@@ -51,7 +230,7 @@ function parseRSS(rssStr: string): ImageInfo[] {
   }
 }
 
-// Calcule la largeur idéale pour chaque image dans une ligne
+// [Implémentation de calculateImageWidths]
 function calculateImageWidths(
   images: ImageInfo[],
   containerWidth: number,
@@ -100,113 +279,7 @@ function calculateImageWidths(
   };
 }
 
-// Composant pour une ligne d'images
-function ImageRow({
-  images,
-  rowHeight,
-  containerWidth,
-  gapSize,
-  index,
-}: {
-  images: ImageInfo[];
-  rowHeight: number;
-  containerWidth: number;
-  gapSize: number;
-  index: number;
-}) {
-  const rowRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  // Calculer les largeurs proportionnelles pour CSS grid
-  const gridColumns = useMemo(() => {
-    if (images.length === 0) return "";
-
-    // Calculer la largeur de référence pour chaque image
-    let totalAspectRatioSum = 0;
-    images.forEach((img) => {
-      totalAspectRatioSum += img.width / img.height;
-    });
-
-    // Calculer la fraction de largeur pour chaque image
-    return images
-      .map((img) => {
-        const aspectRatio = img.width / img.height;
-        return `${aspectRatio / totalAspectRatioSum}fr`;
-      })
-      .join(" ");
-  }, [images, containerWidth, gapSize]);
-
-  // Observer l'intersection pour l'animation
-  useEffect(() => {
-    if (!rowRef.current) return;
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          // setIsVisible(true);
-          observer.disconnect();
-        }
-      });
-    });
-
-    observer.observe(rowRef.current);
-
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div
-      ref={rowRef}
-      className={`image-row ${isVisible ? "animate" : ""}`}
-      style={{
-        display: "grid",
-        gridTemplateColumns: gridColumns,
-        gap: `${gapSize}rem`,
-        height: `${rowHeight}px`,
-        // opacity: isVisible ? 1 : 0,
-        transition: "opacity 0.5s, filter 0.5s",
-      }}
-    >
-      {images.map((img, imgIndex) => (
-        <a
-          key={`${index}-${imgIndex}`}
-          href={img.title ? `/posts/${img.title}` : "#"}
-          style={{
-            height: "100%",
-            display: "block",
-            overflow: "hidden",
-            viewTransitionName: `image-${index}-${imgIndex}`,
-            "--index": `${index * 100 + imgIndex}`,
-          }}
-        >
-          <img
-            onMouseEnter={(ev) => {
-              const element = ev.target as HTMLImageElement;
-              if (ev.isTrusted) {
-                element.classList.add("active");
-              }
-            }}
-            onMouseLeave={(ev) => {
-              const element = ev.target as HTMLImageElement;
-              if (ev.isTrusted) {
-                element.classList.remove("active");
-              }
-            }}
-            src={img.src}
-            alt={img.title || ""}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-            }}
-          />
-        </a>
-      ))}
-    </div>
-  );
-}
-
-// Composant principal PhotoGrid
+// Composant principal PhotoGrid - modifié pour intégrer le Lightbox correctement
 export function PhotoGrid({
   rss,
   rowHeight = 200,
@@ -216,7 +289,12 @@ export function PhotoGrid({
   const containerRef = useRef<HTMLDivElement>(null);
   const [images, setImages] = useState<ImageInfo[]>([]);
   const [containerWidth, setContainerWidth] = useState(0);
+  const [loadingState, setLoadingState] = useState<boolean[][]>([]);
   const gapSize = parseFloat(gap);
+  const [allImages, setAllImages] = useState<ImageInfo[]>([]); // Pour stocker toutes les images aplaties
+
+  // Utiliser le hook useLightbox avec toutes les images
+  const { refLightbox } = useLightbox(allImages);
 
   // Parser le RSS et extraire les images
   useEffect(() => {
@@ -251,6 +329,7 @@ export function PhotoGrid({
 
     const rows = [];
     let remainingImages = [...images];
+    const allImagesFlat: ImageInfo[] = [];
 
     while (remainingImages.length > 0 && rows.length < maxRows) {
       const { rowImages, remainingImages: newRemainingImages } =
@@ -262,54 +341,108 @@ export function PhotoGrid({
         );
 
       rows.push(rowImages);
+      // Ajouter les images de cette ligne à notre liste aplatie
+      allImagesFlat.push(...rowImages);
       remainingImages = newRemainingImages;
 
       // Protection contre les boucles infinies
       if (rowImages.length === 0) break;
     }
 
+    // Mettre à jour la liste complète des images pour le lightbox
+    setAllImages(allImagesFlat);
+
+    // Initialiser l'état de chargement pour chaque image dans chaque ligne
+    const newLoadingState = rows.map((row) => Array(row.length).fill(false));
+    setLoadingState(newLoadingState);
+
     return rows;
   }, [images, containerWidth, rowHeight, gapSize]);
+
+  // Gestionnaire pour marquer une image comme chargée
+  const handleImageLoad = (rowIndex: number, imgIndex: number) => {
+    setLoadingState((prevState) => {
+      const newState = [...prevState];
+      if (newState[rowIndex]) {
+        newState[rowIndex] = [...newState[rowIndex]];
+        newState[rowIndex][imgIndex] = true;
+      }
+      return newState;
+    });
+  };
+
+  // Fonction pour obtenir l'index global d'une image dans la collection complète
+  const getImageIndex = (rowIndex: number, imgIndex: number): number => {
+    let globalIndex = 0;
+    for (let i = 0; i < rowIndex; i++) {
+      globalIndex += rows[i].length;
+    }
+    return globalIndex + imgIndex;
+  };
 
   const hasMoreImages =
     images.length > 0 &&
     rows.reduce((count, row) => count + row.length, 0) < images.length;
 
+  // Ajouter des styles CSS pour l'animation du skeleton
+  useEffect(() => {
+    const styleElement = document.createElement("style");
+    styleElement.textContent = `
+      @keyframes skeleton-loading {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+      }
+    `;
+    document.head.appendChild(styleElement);
+
+    return () => {
+      document.head.removeChild(styleElement);
+    };
+  }, []);
+
   return (
-    <div
-      ref={containerRef}
-      className="photo-grid"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: gap,
-      }}
-    >
-      {rows.map((rowImages, index) => (
-        <ImageRow
-          key={`row-${index}`}
-          images={rowImages}
-          rowHeight={rowHeight}
-          containerWidth={containerWidth}
-          gapSize={gapSize}
-          index={index}
-        />
-      ))}
-      {hasMoreImages && (
-        <button
-          style={{
-            display: "inline-block",
-            marginTop: "1rem",
-            width: "max-content",
-            color: "var(--accents-8)",
-            padding: "5px 10px",
-            border: "1px solid var(--accents-3)",
-          }}
-          class="more-projet"
-        >
-          voir plus →
-        </button>
-      )}
-    </div>
+    <>
+      <div
+        ref={containerRef}
+        className="photo-grid"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: gap,
+        }}
+      >
+        {rows.map((rowImages, index) => (
+          <ImageRow
+            key={`row-${index}`}
+            images={rowImages}
+            rowHeight={rowHeight}
+            containerWidth={containerWidth}
+            gapSize={gapSize}
+            index={index}
+            onImageLoad={handleImageLoad}
+            getImageIndex={getImageIndex}
+            refLightbox={refLightbox}
+          />
+        ))}
+        {hasMoreImages && (
+          <button
+            style={{
+              display: "inline-block",
+              marginTop: "1rem",
+              width: "max-content",
+              color: "var(--accents-8)",
+              padding: "5px 10px",
+              border: "1px solid var(--accents-3)",
+            }}
+            className="more-projet"
+          >
+            voir plus →
+          </button>
+        )}
+      </div>
+
+      {/* Ajouter le composant Lightbox */}
+      <Lightbox />
+    </>
   );
 }

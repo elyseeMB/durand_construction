@@ -9,7 +9,8 @@
 @import "./modules/footer.css";
 
 /* BLOCKS */
-@import "./blocks/projets.css";
+/* @import "./blocks/projets.css"; */
+@import "./blocks/blog.css";
 
 :root {
   --durand-blue: #1c2d7a;
@@ -52,8 +53,8 @@
 }
 
 #logo {
-  width: 80px;
-  height: 80px;
+  width: 40px;
+  height: 40px;
   display: block;
 }
 
@@ -159,6 +160,14 @@ p,
   }
 }
 
+html.is-changing .transition-fade {
+  transition: opacity 0.25s;
+  opacity: 1;
+}
+html.is-animating .transition-fade {
+  opacity: 0;
+}
+
 body {
   position: relative;
   width: 100%;
@@ -202,4 +211,28 @@ body {
   background-size: 20px;
   right: auto;
   left: 5px;
+}
+
+.paragraph {
+  text-align: left;
+  line-height: 1.7;
+}
+
+.paragraph__effect {
+  font-size: var(--size-family, inherit);
+  animation: ItemIn 0.5s both;
+  animation-delay: calc((0.3s + 0.1s * var(--index, 0)));
+
+  &.empty__paragraph {
+    display: block;
+    min-height: 1.5rem;
+  }
+}
+
+@keyframes ItemIn {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(40px);
+  }
 }

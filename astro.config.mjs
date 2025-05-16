@@ -7,5 +7,12 @@ import markdoc from "@astrojs/markdoc";
 
 // https://astro.build/config
 export default defineConfig({
+  server: {
+    allowedHosts: [
+      "4a03-102-129-78-29.ngrok-free.app",
+      "12e4-102-129-78-29.ngrok-free.app",
+      "aa5f-102-129-78-29.ngrok-free.app",
+    ],
+  },
   integrations: [preact(), markdoc()],
 });

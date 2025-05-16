@@ -10,7 +10,7 @@ export function Carousel({ scrollVisible }: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const prevButtonRef = useRef<HTMLButtonElement>(null);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
-  const [isMountef, setIsMounted] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -18,7 +18,7 @@ export function Carousel({ scrollVisible }: Props) {
 
   useEffect(() => {
     if (
-      !isMountef ||
+      !isMounted ||
       !sliderRef ||
       !wrapperRef ||
       !nextButtonRef ||
@@ -100,7 +100,7 @@ export function Carousel({ scrollVisible }: Props) {
       slider.prevButton.removeEventListener("click", handlePrevClick);
       slider.wrapper.removeEventListener("scrollend", handleScrollEnd);
     };
-  }, [isMountef]);
+  }, [isMounted]);
 
   console.log("render");
 

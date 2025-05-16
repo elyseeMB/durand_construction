@@ -1,0 +1,87 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  url?: string;
+  typeContent?: "website" | "article";
+}
+
+const {
+  title = "Durand Construction - Architecture et Bâtiment Durable",
+  description = "Durand Construction est spécialisée dans l'architecture moderne, la construction durable et les projets clés en main. Découvrez nos réalisations et services.",
+  image = "https://durand-construction.com/og-image.jpg",
+  url = "https://durand-construction.com",
+  typeContent = "website",
+} = Astro.props;
+
+const name = "Durand Construction";
+const fullTitle = `${title} | ${name}`;
+---
+
+<title>{fullTitle}</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content={description} />
+<link rel="canonical" href={url} />
+
+<link rel="icon" type="image/png" href="/favicon-512.png" sizes="512x512" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#1e1e1e" />
+
+<meta property="og:site_name" content={name} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:type" content={typeContent} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={image} />
+<meta property="og:url" content={url} />
+<meta name="robots" content="index, follow" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image} />
+<meta name="twitter:site" content="@DurandConstruction" />
+
+<script is:inline type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Durand Construction",
+    "description": "Entreprise d’architecture et de construction durable basée en France.",
+    "url": "https://durand-construction.com",
+    "logo": "https://durand-construction.com/logo.png",
+    "image": "https://durand-construction.com/og-image.jpg",
+    "telephone": "+33 1 23 45 67 89",
+    "email": "contact@durand-construction.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "123 Rue des Bâtisseurs",
+      "addressLocality": "Paris",
+      "postalCode": "75001",
+      "addressCountry": "FR"
+    },
+    "openingHours": "Mo-Fr 09:00-18:00",
+    "sameAs": [
+      "https://facebook.com/durandconstruction",
+      "https://instagram.com/durandconstruction",
+      "https://linkedin.com/company/durand-construction"
+    ]
+  }
+</script>
+
+<script is:inline type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Durand Construction",
+    "url": "https://durand-construction.com",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://durand-construction.com/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+</script>
