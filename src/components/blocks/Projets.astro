@@ -33,6 +33,8 @@ const doc = await Promise.all(
     description="SUIVEZ NOTRE ACTUALITÉ AU CŒUR DE L’ARCHITECTURE ET DU BÂTIMENT"
   />
   <BottomPage
+    labelForLink='voir tous nos articles'
+    href="/blog"
     topic="Blog"
     classement="4.0"
     description="nous vous partageons ici l’envers du décor, les tendances qui nous animent et notre approche sur la manière de bâtir intelligemment."
@@ -71,6 +73,7 @@ const doc = await Promise.all(
     height: 100%;
     background-color: var(--durand-orange);
     color: var(--accents-8);
+    padding-bottom: var(--space-6);
   }
 
   .articles {

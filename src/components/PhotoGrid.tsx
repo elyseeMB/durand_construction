@@ -424,7 +424,7 @@ export function PhotoGrid({
             refLightbox={refLightbox}
           />
         ))}
-        {hasMoreImages && (
+        {/* {hasMoreImages && (
           <button
             style={{
               display: "inline-block",
@@ -438,7 +438,7 @@ export function PhotoGrid({
           >
             voir plus →
           </button>
-        )}
+        )} */}
       </div>
 
       {/* Ajouter le composant Lightbox */}

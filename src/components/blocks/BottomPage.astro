@@ -1,11 +1,15 @@
 ---
+import { discriminatedUnion } from 'astro:schema';
+
 interface Props {
   description?: any;
   classement?: any;
   topic?: any;
+  labelForLink?: any;
+  href?: any;
 }
 
-const { description, classement, topic } = Astro.props;
+const { description, classement, topic, labelForLink, href } = Astro.props;
 ---
 
 <div class="bottom">
@@ -33,6 +37,15 @@ const { description, classement, topic } = Astro.props;
   <div class="content">
     <slot />
   </div>
+  {
+    labelForLink && href ?
+    (
+      <div class="link">
+        <a href={href}>{"→" + " " + labelForLink}</a>
+      </div>
+    )
+    : <></>
+  }
 </div>
 
 <style>

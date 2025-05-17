@@ -12,6 +12,8 @@ const rss = await data.text();
     <div class="description">
       <Heading title="CHEZ DURAND," description="NOUS CONSTRUISONS VOS RÊVES" />
       <BottomPage
+        labelForLink="En savoir plus sur nous"
+        href="/about"
         topic="approach"
         classement="1.0"
         description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum ducimus est quibusdam."
@@ -20,9 +22,13 @@ const rss = await data.text();
           src="https://freight.cargo.site/w/600/q/75/i/13959baccd0882a93967ed92da231fc20a5eb518f06858467d31745d70cb545e/Patchwork2.jpg"
         />
       </BottomPage>
+    </div>
 
+    <div class="description">
       <HeadingSmart description="NOS DERNIERS PROJETS." />
       <BottomPage
+        labelForLink="Voir tout nos projects"
+        href="/work"
         topic="approach"
         classement="2.0"
         description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum ducimus est quibusdam."
@@ -50,6 +56,7 @@ const rss = await data.text();
     margin: 0;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
+    padding-bottom: 5rem;
   }
 
   .description .left {

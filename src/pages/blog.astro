@@ -5,14 +5,14 @@ import { Image, Picture } from "astro:assets";
 import { getCollection } from "astro:content";
 import { date } from "astro:schema";
 import { ViewProjets } from "../components/ViewProjets.tsx";
+import BottomPage from "../components/blocks/BottomPage.astro";
+import Heading from "../components/Heading.astro";
 const taxonomies = await getCollection("taxonomies");
 const posts = await getCollection("blog");
 
 function getPostsByTaxonomy(id: string) {
   return posts.filter((post) => post.data.taxonomies?.some((t) => t.id === id));
 }
-
-console.log(await getCollection("blog"));
 
 const taxonomiesWithPosts = taxonomies.map((taxonomy) => ({
   taxonomy: taxonomy.data.name,
@@ -33,7 +33,16 @@ const seo = {
 <Layout {...seo}>
   <section>
     <div class="container">
-      <ViewProjets client:load data={taxonomiesWithPosts} />
+      <Heading
+        title="ENTRE IDÉES, CHANTIERS ET INNOVATIONS : SUIVEZ NOTRE ACTUALITÉ AU CŒUR DE L’ARCHITECTURE ET DU BÂTIMENT"
+      />
+      <BottomPage
+        topic="articles"
+        classement="4.0"
+        description="nous vous partageons ici l’envers du décor, les tendances qui nous animent et notre approche sur la manière de bâtir intelligemment."
+      >
+        <ViewProjets client:load data={taxonomiesWithPosts} />
+      </BottomPage>
     </div>
   </section>
 </Layout>

@@ -1,5 +1,8 @@
 ---
+import Heading from "../../components/Heading.astro";
+import HeadingSmart from "../../components/HeadingSmart.astro";
 import { PhotoGrid } from "../../components/PhotoGrid.tsx";
+import BottomPage from "../../components/blocks/BottomPage.astro";
 import Layout from "../../layouts/Layout.astro";
 const seo = {
   title: "Nos Réalisations",
@@ -14,44 +17,36 @@ const rss = await data.text();
 ---
 
 <Layout {...seo}>
-  <div class="wrapper">
-    <div class="container">
-      <div class="heading">
-        <h1>
-          Découvrez nos réalisations architecturales alliant excellence,
-          durabilité et design sur mesure
-        </h1>
+  <div class="container">
+    <Heading
+      title="Découvrez nos réalisations architecturales alliant excellence, durabilité et design sur mesure"
+    />
+    <BottomPage
+      topic="work"
+      classement="5.0"
+      description="nous vous partageons ici l’envers du décor, les tendances qui nous animent et notre approche sur la manière de bâtir intelligemment."
+    >
+      <div class="projets">
+        {
+          Array.from({ length: 3 }, (_, k) => (
+            <div class="gallery">
+              <h5>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h5>
+              <PhotoGrid
+                maxRows={4 + 1}
+                client:load
+                rss={rss}
+                rowHeight={300}
+                gap="0.5rem"
+              />
+            </div>
+          ))
+        }
       </div>
-    </div>
-  </div>
-
-  <div class="container projets">
-    {
-      Array.from({ length: 3 }, (_, k) => (
-        <div class="gallery">
-          <h5>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h5>
-          <PhotoGrid
-            maxRows={4 + 1}
-            client:load
-            rss={rss}
-            rowHeight={300}
-            gap="0.5rem"
-          />
-        </div>
-      ))
-    }
+    </BottomPage>
   </div>
 </Layout>
 
 <style>
-  .wrapper {
-  }
-
-  .heading {
-    font-weight: 800;
-    padding-block: 1rem;
-  }
-
   .container .gallery {
     display: flex;
     flex-direction: column;

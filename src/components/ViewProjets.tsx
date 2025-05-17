@@ -19,20 +19,6 @@ export function ViewProjets({ data }: Props) {
   return (
     <>
       <div class="description-view">
-        <div class="left">
-          <h3 class="heading-primary">
-            Entre idées, chantiers et innovations : suivez notre actualité au
-            cœur de l’architecture et du bâtiment
-          </h3>
-          <h6 class="heading-secondary">
-            nous vous partageons ici l’envers du décor, les tendances qui nous
-            animent et notre approche sur la manière de bâtir intelligemment.
-          </h6>
-        </div>
-        <div className="indicator">
-          <div class="arrow">→</div>
-          <span>(scroll)</span>
-        </div>
         <div class="approach">
           <List data={onlyTaxonomyWithPosts} />
 

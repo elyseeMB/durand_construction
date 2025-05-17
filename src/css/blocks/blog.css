@@ -6,49 +6,6 @@
   grid-template-columns: repeat(5, 1fr);
 }
 
-.description-view .indicator {
-  color: var(--accents-6);
-  display: flex;
-  width: max-content;
-  height: max-content;
-  align-items: center;
-  grid-column: 1;
-  padding-block: 6rem;
-  margin-top: -10px;
-
-  span {
-    font-size: 0.7rem;
-  }
-}
-
-.description-view .arrow {
-  letter-spacing: -0.02em;
-  font-size: 2.75rem;
-  line-height: 1.13;
-  grid-column: 1;
-  transform: rotate(90deg);
-  transform-origin: center;
-  width: max-content;
-  height: max-content;
-}
-
-.description-view .left {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  grid-column: 2 / span 3;
-  z-index: 1;
-
-  .heading-primary {
-    color: var(--accents-7);
-  }
-
-  .heading-secondary {
-    font-size: 0.8rem;
-    color: var(--accents-6);
-  }
-}
-
 .description-view .approach {
   display: flex;
   gap: 2.5rem;
@@ -70,7 +27,7 @@
 
   .list .topics {
     color: var(--accents-8);
-    font-size: 0.8rem;
+    font-size: var(--h5);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
@@ -79,6 +36,7 @@
 
   .list .topics ul {
     width: 100%;
+    font-size: var(--size-small-text);
 
     & > * {
       position: relative;
