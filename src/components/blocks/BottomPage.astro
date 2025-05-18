@@ -115,4 +115,17 @@ const { description, classement, topic, labelForLink, href } = Astro.props;
     font-size: var(--size-small-text);
     font-weight: 600;
   }
+
+
+  @media screen and (max-width: 590px) {
+    .bottom {
+    display: flex;
+    flex-direction: column;
+    }
+    
+    .bottom .info {
+     display: none;
+    }
+
+  }
 </style>

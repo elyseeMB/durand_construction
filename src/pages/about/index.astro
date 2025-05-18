@@ -1,8 +1,16 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+
+const seo = {
+  title: "À propos de Durand Construction",
+  description:
+    "Découvrez l'histoire, la vision et les valeurs de Durand Construction. Une entreprise engagée dans la construction durable, la rénovation sur mesure et l'architecture moderne.",
+  image: "https://durand-construction.com/og-image.jpg",
+  url: Astro.url.href,
+};
 ---
 
-<Layout>
+<Layout {...seo}>
   <div class="container about">
     <section class="l-blockWrapper">
       <div class="l-blockLines container">

@@ -1,6 +1,7 @@
 import type { CollectionEntry } from "astro:content";
 import { useEffect, useState } from "preact/hooks";
 import { ProgressiveImage } from "./ProgressImage.tsx";
+import { strategyToUppercase } from "../helpers/dom.ts";
 
 type PropsData = {
   taxonomy: string;
@@ -25,7 +26,7 @@ export function ViewProjets({ data }: Props) {
           <div class="list">
             <span class="period">2024</span>
             <div class="topics">
-              <div class="taxonomy">Matériaux & Techniques</div>
+              <div class="taxonomy">MATÉRIAUX & TECHNIQUES</div>
               <ul>
                 <li>Béton bas carbone : quelles solutions aujourd’hui ?</li>
                 <li>
@@ -39,7 +40,7 @@ export function ViewProjets({ data }: Props) {
             </div>
 
             <div class="topics">
-              <div class="taxonomy">Architecture & Design</div>
+              <div class="taxonomy">ARCHITECTURE & DESIGN</div>
               <ul>
                 <li>5 tendances architecturales à suivre en 2025</li>
                 <li>L’architecture minimaliste : fonction et élégance</li>
@@ -62,7 +63,7 @@ function Topics({ name, posts }: { name: string; posts: PropsData["posts"] }) {
 
   return (
     <div class="topics">
-      <div class="taxonomy">{name} →</div>
+      <div class="taxonomy">{strategyToUppercase(name)} →</div>
 
       <ul>
         {posts?.map((post) => (
@@ -99,74 +100,6 @@ function List({ data }: { data: PropsData[] }) {
       {data.map((item) => (
         <Topics name={item.taxonomy} posts={item.posts} />
       ))}
-
-      {/* <div class="topics">
-        <div class="taxonomy">Matériaux & Techniques</div>
-        <ul>
-          <li>Béton bas carbone : quelles solutions aujourd’hui ?</li>
-          <li>
-            Bois, acier, terre crue : pourquoi nous diversifions les matériaux
-          </li>
-          <li>L’importance de la lumière naturelle dans nos constructions</li>
-        </ul>
-      </div>
-
-      <div class="topics">
-        <div class="taxonomy">Architecture & Design</div>
-        <ul>
-          <li>5 tendances architecturales à suivre en 2025</li>
-          <li>L’architecture minimaliste : fonction et élégance</li>
-          <li>Comment concevoir un espace de vie fluide et harmonieux</li>
-        </ul>
-      </div>
-
-      <div class="topics">
-        <div class="taxonomy">Durabilité & Innovation</div>
-        <ul>
-          <li>Construction durable : nos engagements au quotidien</li>
-          <li>Réemploi des matériaux : un levier écologique et économique</li>
-          <li>L’intégration des énergies renouvelables dans l’architecture</li>
-        </ul>
-      </div>
-
-      <div class="topics">
-        <div class="taxonomy">Vie du cabinet</div>
-        <ul>
-          <li>Rencontre avec notre équipe : qui fait quoi ?</li>
-          <li>Notre méthodologie : comment nous accompagnons nos clients</li>
-          <li>
-            Visite virtuelle de nos bureaux et de notre atelier de maquettes
-          </li>
-        </ul>
-      </div>
-
-      <div class="topics">
-        <div class="taxonomy">Pédagogie & Conseils</div>
-        <ul>
-          <li>
-            7 erreurs fréquentes dans un projet de construction (et comment les
-            éviter)
-          </li>
-          <li>Faut-il un architecte pour une maison individuelle ?</li>
-          <li>
-            Quelles sont les étapes clés avant de déposer un permis de
-            construire ?
-          </li>
-        </ul>
-      </div>
-
-      <div class="topics">
-        <div class="taxonomy">Réflexions & Vision</div>
-        <ul>
-          <li>
-            Quelle place pour l’architecture dans une société en transition ?
-          </li>
-          <li>
-            Comment bâtir pour demain ? Nos convictions pour un habitat durable
-          </li>
-          <li>Le rapport au temps en architecture : construire pour durer</li>
-        </ul>
-      </div> */}
     </div>
   );
 }

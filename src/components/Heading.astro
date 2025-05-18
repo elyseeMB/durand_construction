@@ -1,4 +1,6 @@
 ---
+import { strategyToUppercase } from "../helpers/dom.ts";
+
 interface Props {
   title?: string;
   description?: string;
@@ -8,14 +10,19 @@ const { title, description } = Astro.props;
 ---
 
 <div class="left">
-  <h3>
-    {title}<br />
-  </h3>
+  {
+    title && (
+      <h1>
+        {strategyToUppercase(title)}
+        <br />
+      </h1>
+    )
+  }
   {
     description && (
-      <h3>
-        <span>{description}</span>
-      </h3>
+      <h1>
+        <span>{strategyToUppercase(description)}</span>
+      </h1>
     )
   }
 </div>
@@ -25,7 +32,7 @@ const { title, description } = Astro.props;
     grid-column: 1 / span 5;
     padding-block: var(--space);
 
-    h3 {
+    h1 {
       --line-height: 1.13;
       --size: 2.75rem;
       position: relative;
@@ -51,6 +58,30 @@ const { title, description } = Astro.props;
         border-radius: 5rem;
         background: #fff;
       }
+    }
+  }
+
+  @media screen and (max-width: 590px) {
+    .left h1 {
+      --size-before: 0.8rem;
+      --size: 2rem;
+      font-size: var(--size);
+    }
+
+    .left h1:last-child {
+      text-indent: 0;
+    }
+
+    .left h1:first-child:before {
+      position: absolute;
+      content: "";
+      inset: 0;
+      left: 0;
+      top: calc((var(--size) * var(--line-height) - var(--size-before)) / 2);
+      width: var(--size-before);
+      aspect-ratio: 1 / 1;
+      border-radius: 5rem;
+      background: #fff;
     }
   }
 </style>

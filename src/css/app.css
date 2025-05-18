@@ -32,6 +32,7 @@
 
   --font-size-base: 16px;
   --font-scale: 1.25;
+  --h7: calc(var(--font-size-base) * 0.5);
   --h6: calc(var(--font-size-base) * 1);
   --h5: calc(var(--font-size-base) * var(--font-scale));
   --h4: calc(var(--h5) * var(--font-scale));
@@ -159,6 +160,22 @@ p,
   p,
   .text {
     font-size: var(--font-size-base);
+    line-height: 1.6;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  :root {
+    --font-size-base: 20px;
+    --font-scale: 1.25;
+  }
+  ul li {
+    font-size: var(--font-size-base) !important;
+  }
+
+  p,
+  .text {
+    font-size: var(--font-size-base) !important;
     line-height: 1.6;
   }
 }

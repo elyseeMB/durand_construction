@@ -1,4 +1,6 @@
 ---
+import { strategyToUppercase } from "../helpers/dom.ts";
+
 interface Props {
   title?: string;
   description?: string;
@@ -8,12 +10,21 @@ const { title, description } = Astro.props;
 ---
 
 <div class="left">
-  <h3>
-    {title}<br />
-  </h3>
-  <h3>
-    <span>{description}</span>
-  </h3>
+  {
+    title && (
+      <h3>
+        {strategyToUppercase(title!)}
+        <br />
+      </h3>
+    )
+  }
+  {
+    description && (
+      <h3>
+        <span>{strategyToUppercase(description)}</span>
+      </h3>
+    )
+  }
 </div>
 
 <style>
@@ -28,6 +39,13 @@ const { title, description } = Astro.props;
       letter-spacing: -0.02em;
       font-size: var(--size);
       line-height: var(--line-height);
+    }
+  }
+
+  @media screen and (max-width: 590px) {
+    .left h3 {
+      --size: 1.75rem;
+      font-size: var(--size);
     }
   }
 </style>

@@ -55,3 +55,9 @@
     transition-delay: 0s;
   }
 }
+
+@media screen and (max-width: 590px) {
+  .link a {
+    font-size: var(--h4);
+  }
+}

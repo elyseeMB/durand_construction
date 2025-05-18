@@ -4,6 +4,7 @@ import { getCollection, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { getEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import { strategyToUppercase } from "../../helpers/dom.ts";
 
 interface Props {
   post: CollectionEntry<"blog">;
@@ -62,7 +63,7 @@ const seo = seoProps ? seoProps : metaData;
 
   <div class="container-narrow">
     <div class="info">
-      <h1>{title}</h1>
+      <h1>{strategyToUppercase(title)}</h1>
       <div class="tags">
         {
           getTaxonomies.map((taxonomy) => (
@@ -73,11 +74,15 @@ const seo = seoProps ? seoProps : metaData;
     </div>
   </div>
 
-  <div class="container-narrow description">
-    <blockquote>
-      <p>{summary}</p>
-    </blockquote>
-  </div>
+  {
+    summary && (
+      <div class="container-narrow description">
+        <blockquote>
+          <p>{summary}</p>
+        </blockquote>
+      </div>
+    )
+  }
 
   <div class="heading">
     <div class="cover">
@@ -139,7 +144,7 @@ const seo = seoProps ? seoProps : metaData;
 
     h1 {
       color: var(--paragraph-color);
-      font-size: var(--h1);
+      font-size: var(--title-1);
     }
   }
 

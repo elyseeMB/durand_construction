@@ -67,13 +67,13 @@ export function Header() {
         </ul>
       </div>
 
-      {/* <ul class="header-side">
+      <ul class="header-side">
         <li className="header__burger">
           <button onClick={setIsOpen} id="js-burger">
-            <span>Afficher le menu</span>
+            <span>Menu</span>
           </button>
         </li>
-      </ul> */}
+      </ul>
     </nav>
   );
 }
