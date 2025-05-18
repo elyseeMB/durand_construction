@@ -53,7 +53,7 @@ footer .list ul {
 
 footer .legacy {
   padding-top: var(--space-6);
-  padding-bottom: var(--space-2);
+  padding-bottom: var(--space-5);
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   place-items: flex-end;
@@ -66,8 +66,24 @@ footer .legacy .copyright {
   font-weight: 300;
 }
 
+footer .legacy a {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+footer .legacy a:hover {
+  text-decoration: underline;
+}
+
+footer .legacy svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
 footer .legacy h1 {
-  font-size: 5rem;
+  font-size: 4.8rem;
   line-height: 0.9;
 }
 

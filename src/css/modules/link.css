@@ -58,6 +58,6 @@
 
 @media screen and (max-width: 590px) {
   .link a {
-    font-size: var(--h4);
+    font-size: var(--h6);
   }
 }
