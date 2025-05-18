@@ -1,6 +1,7 @@
 ---
 title: "7 erreurs fréquentes dans un projet de construction (et comment les éviter)"
 author: ben-holmes
+summary: "Le projet de logements collectifs dans le quartier de Mpila à Brazzaville représente un défi architectural et technique passionnant que nous souhaitons partager avec vous."
 taxonomies: ["pedagogie-conseils"]
 thumbnail: "https://freight.cargo.site/w/600/q/75/i/bd82a198560cda42cd619aae69c2352379127a47c9382b4f3fda04384d39f692/Screen-Shot-2023-07-31-at-4.57.19-PM.png"
 ---

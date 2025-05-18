@@ -8,6 +8,7 @@
 @import "./modules/btn.css";
 @import "./modules/footer.css";
 @import "./modules/link.css";
+@import "./modules/scroolbar.css";
 
 /* BLOCKS */
 /* @import "./blocks/projets.css"; */
@@ -193,48 +194,62 @@ body {
   } */
 }
 
+.carousel {
+  position: relative;
+}
+
+.carousel__container {
+  transition: 0.3s cubic-bezier(0, 0, 0.01, 0.94);
+  transform: translate3d(0, 0, 0);
+}
+
+.carousel__container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.carousel__item {
+  float: left;
+}
+
 .carousel__next,
 .carousel__prev {
   position: absolute;
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: rgb(158, 158, 158) center center no-repeat;
+  background: rgb(255, 255, 255) url(/public/arrow-right.svg) center center
+    no-repeat;
   background-size: 20px;
   top: 50%;
-  right: 5px;
+  right: -20px;
   margin-top: -25px;
   cursor: pointer;
   transition: transform 0.3s, opacity 0.3s;
 }
 
+.carousel__next:hover,
+.carousel__prev:hover {
+  filter: brightness(1.5);
+}
+
 .carousel__prev {
-  background: rgb(255, 255, 255) center no-repeat;
+  background: rgb(255, 255, 255) url(/public/arrow-left.svg) center center
+    no-repeat;
   background-size: 20px;
   right: auto;
-  left: 5px;
+  left: -25px;
 }
 
-.paragraph {
-  text-align: left;
-  line-height: 1.7;
-}
-
-.paragraph__effect {
-  font-size: var(--size-family, inherit);
-  animation: ItemIn 0.5s both;
-  animation-delay: calc((0.3s + 0.1s * var(--index, 0)));
-
-  &.empty__paragraph {
-    display: block;
-    min-height: 1.5rem;
-  }
+.carousel__next--hidden[disabled],
+.carousel__prev--hidden[disabled] {
+  opacity: 0.5;
 }
 
 @keyframes ItemIn {
   0% {
     opacity: 0;
-    filter: blur(10px);
-    transform: translateY(40px);
+    transform: translateX(40px);
   }
 }

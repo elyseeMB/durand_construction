@@ -1,6 +1,6 @@
 ---
 title: "my year in review"
-isDraft: true
+isDraft: false
 author: ben-holmes
 ---
 

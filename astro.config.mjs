@@ -1,9 +1,11 @@
 // @ts-check
-import { defineConfig } from "astro/config";
+import { defineConfig, passthroughImageService } from "astro/config";
 
 import preact from "@astrojs/preact";
 
 import markdoc from "@astrojs/markdoc";
+
+import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,5 +18,22 @@ export default defineConfig({
       "aa5f-102-129-78-29.ngrok-free.app",
     ],
   },
-  integrations: [preact(), markdoc()],
+  site: "https://durand-construction.com",
+  image: {
+    service: passthroughImageService(),
+  },
+  integrations: [
+    preact(),
+    markdoc(),
+    sitemap({
+      i18n: {
+        defaultLocale: "fr",
+        locales: {
+          fr: "fr-CA",
+          en: "en-US",
+          es: "es-ES",
+        },
+      },
+    }),
+  ],
 });

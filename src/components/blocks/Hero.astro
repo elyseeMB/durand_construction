@@ -1,8 +1,10 @@
 ---
+import { Image, Picture } from "astro:assets";
 import Heading from "../Heading.astro";
 import HeadingSmart from "../HeadingSmart.astro";
 import { PhotoGrid } from "../PhotoGrid.tsx";
 import BottomPage from "./BottomPage.astro";
+import myImage from "../../assets/exe.jpg";
 const data = await fetch("https://patchworkarchitecture.co.nz/rss");
 const rss = await data.text();
 ---
@@ -18,14 +20,21 @@ const rss = await data.text();
         classement="1.0"
         description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum ducimus est quibusdam."
       >
-        <img
+        <!-- <img
           src="https://freight.cargo.site/w/600/q/75/i/13959baccd0882a93967ed92da231fc20a5eb518f06858467d31745d70cb545e/Patchwork2.jpg"
+        /> -->
+        <Picture
+          src={myImage}
+          formats={["webp"]}
+          alt="A description of my image."
+          width={myImage.width}
+          height={myImage.height}
         />
       </BottomPage>
     </div>
 
     <div class="description">
-      <HeadingSmart description="NOS DERNIERS PROJETS." />
+      <HeadingSmart title="NOS DERNIERS PROJETS." />
       <BottomPage
         labelForLink="Voir tout nos projects"
         href="/work"

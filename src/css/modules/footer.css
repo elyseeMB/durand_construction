@@ -6,7 +6,7 @@ footer {
 }
 
 footer hr {
-  background: currentColor;
+  background: #fff;
   margin-bottom: var(--space-2);
 }
 

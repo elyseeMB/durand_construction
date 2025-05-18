@@ -1,6 +1,7 @@
 import type { UIEventHandler } from "preact/compat";
 import { useEffect, useRef, useState, useMemo } from "preact/hooks";
 import { Lightbox, useLightbox } from "../hooks/useLightbox.tsx";
+import { Picture } from "astro:assets";
 
 // Types pour nos données
 type ImageInfo = {

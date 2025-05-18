@@ -23,7 +23,15 @@ const { post } = Astro.props;
 
 const { Content, headings } = await render(post);
 
-const { seo: seoProps, slug, title, taxonomies, thumbnail, author } = post.data;
+const {
+  seo: seoProps,
+  slug,
+  title,
+  summary,
+  taxonomies,
+  thumbnail,
+  author,
+} = post.data;
 
 const getTaxonomies = await Promise.all(
   taxonomies
@@ -35,7 +43,7 @@ const getTaxonomies = await Promise.all(
 
 const metaData = {
   title: post.data.title,
-  description: post.data.description,
+  description: post.data.summary,
   image: post.data.thumbnail,
   url: Astro.url.href,
 };
@@ -65,7 +73,13 @@ const seo = seoProps ? seoProps : metaData;
     </div>
   </div>
 
-  <div class="container heading">
+  <div class="container-narrow description">
+    <blockquote>
+      <p>{summary}</p>
+    </blockquote>
+  </div>
+
+  <div class="heading">
     <div class="cover">
       <img src={thumbnail} alt="" />
     </div>
@@ -89,6 +103,12 @@ const seo = seoProps ? seoProps : metaData;
     --border: var(--accents-2);
   }
 
+  blockquote {
+    border-left: 4px solid var(--accents-2);
+    padding: 1em 1.5em;
+    font-style: italic;
+  }
+
   .heading {
     display: grid;
     grid-template-columns: 1fr;
@@ -103,15 +123,23 @@ const seo = seoProps ? seoProps : metaData;
     }
   }
 
+  .description {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    padding-top: 10rem;
+    gap: 3rem;
+  }
+
   .container-narrow .info {
-    padding-top: 2rem;
+    padding-top: 6rem;
     display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
 
     h1 {
       color: var(--paragraph-color);
-      font-size: var(--title-1);
+      font-size: var(--h1);
     }
   }
 
@@ -121,11 +149,27 @@ const seo = seoProps ? seoProps : metaData;
     gap: 0.5rem;
 
     .tag {
+      position: relative;
+      display: flex;
+      gap: 0.3rem;
+      position: relative;
       font-size: 0.7rem;
+      background-color: #ffa50075;
       border-radius: 0.4rem;
-      line-height: 0.3;
-      padding: 10px 3px;
-      background: var(--durand-orange);
+      display: flex;
+      align-items: center;
+      padding: 5px 3px;
+      width: max-content;
+
+      &::before {
+        content: "";
+        float: 0;
+        display: block;
+        width: 7px;
+        border-radius: 7px;
+        aspect-ratio: 1 / 1;
+        background: #fff;
+      }
     }
   }
 

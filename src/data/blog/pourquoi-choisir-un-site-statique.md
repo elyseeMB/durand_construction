@@ -2,13 +2,14 @@
 title: "Pourquoi choisir un site statique ?"
 author: "durand-construction"
 thumbnail: "https://freight.cargo.site/w/500/q/75/i/d51e4f79905987a6ba75a8bd19182f66b984b9dc0af0a4dffd61964b28c11164/PW.SW.Gonville.224-copy.jpg"
-isDraft: true
+summary: "Durand Construction adopte un site statique pour sa rapidité, sa sécurité et sa simplicité. Grâce à une architecture moderne sans backend, notre site est plus performant, plus fiable et optimisé pour le référencement. Un choix stratégique pour une présence en ligne durable et efficace."
+isDraft: false
 taxonomies:
   ["architecture-design", "durabilite-innovation", "pedagogie-conseils"]
 seo:
   {
     title: "Pourquoi choisir un site statique ?",
-    description: "Les sites statiques sont rapides, sûrs, économiques et parfaits pour le SEO. Découvrez les avantages concrets d’un site statique pour votre activité.",
+    description: "Durand Construction adopte un site statique pour sa rapidité, sa sécurité et sa simplicité. Grâce à une architecture moderne sans backend, notre site est plus performant, plus fiable et optimisé pour le référencement. Un choix stratégique pour une présence en ligne durable et efficace.",
     image: "https://freight.cargo.site/w/500/q/75/i/d51e4f79905987a6ba75a8bd19182f66b984b9dc0af0a4dffd61964b28c11164/PW.SW.Gonville.224-copy.jpg",
     typeContent: "article",
     tags:
@@ -30,7 +31,7 @@ Dans un monde numérique en constante évolution, la simplicité et l’efficaci
 
 ## 🚀 Performance : des vitesses de chargement imbattables
 
-<img src='https://freight.cargo.site/w/800/q/75/i/eddaa6552671e0c49aa943f18aba5669e5f8118dce0a22f5952355417ff62671/AXO-VIEW-vertical.jpg' />
+![Astro](https://freight.cargo.site/w/800/q/75/i/eddaa6552671e0c49aa943f18aba5669e5f8118dce0a22f5952355417ff62671/AXO-VIEW-vertical.jpg)
 
 Un site statique, c’est avant tout un site **pré-généré** : les pages sont construites une fois lors du déploiement, puis servies directement au visiteur sans calcul serveur à chaque requête.
 
@@ -60,7 +61,7 @@ Les fichiers HTML générés sont **immutables**, ce qui empêche les modificati
 
 ## ⚙️ Simplicité et coût de déploiement réduits
 
-<img src="https://freight.cargo.site/w/700/q/75/i/4996a0538becee59ae99f5e82603d8bc583e061fb462907a7dc17542731b8073/CHARLIEMCKAY-0025.jpg">
+![Astro](https://freight.cargo.site/w/700/q/75/i/4996a0538becee59ae99f5e82603d8bc583e061fb462907a7dc17542731b8073/CHARLIEMCKAY-0025.jpg)
 
 Un site statique peut être déployé sur des services modernes comme **Netlify**, **Vercel**, ou **GitHub Pages**.
 

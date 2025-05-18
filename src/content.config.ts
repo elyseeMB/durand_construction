@@ -10,7 +10,7 @@ const blog = defineCollection({
     isDraft: z.boolean().default(false),
     taxonomies: z.array(reference("taxonomies")).optional(),
     thumbnail: z.string().optional(),
-    description: z.string().optional(),
+    summary: z.string().optional(),
     // description: z.string(),
     // pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),

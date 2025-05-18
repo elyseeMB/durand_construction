@@ -4,6 +4,8 @@ import "../css/app.css";
 import { Header } from "../components/ui/Header.tsx";
 import Footer from "../components/Footer.astro";
 import Seo from "../components/Seo.astro";
+import { Wrapper } from "../components/Wrapper.tsx";
+import LenisScroll from "../components/LenisScroll.astro";
 
 const {
   title,
@@ -33,6 +35,8 @@ console.log(image);
       <slot />
       <Footer />
     </div>
+
+    <LenisScroll />
   </body>
 </html>
 
