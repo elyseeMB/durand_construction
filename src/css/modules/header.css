@@ -86,7 +86,7 @@
 .header a:hover,
 .header button {
   text-decoration: underline;
-  color: currentColor;
+  color: var(--durand-orange);
 }
 
 .header__burger {
