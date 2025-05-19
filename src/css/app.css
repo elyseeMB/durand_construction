@@ -181,12 +181,22 @@ p,
   }
 }
 
-html.is-changing .transition-fade {
-  transition: opacity 0.25s;
-  opacity: 1;
-}
-html.is-animating .transition-fade {
-  opacity: 0;
+@media screen and (min-width: 1200px) {
+  :root {
+    --font-size-base: 1.2rem;
+    --font-scale: 1.25;
+  }
+
+  ul li {
+    font-size: var(--font-size-base) !important;
+    line-height: 1.6;
+  }
+
+  p,
+  .text {
+    font-size: var(--font-size-base) !important;
+    line-height: 1.6;
+  }
 }
 
 body {

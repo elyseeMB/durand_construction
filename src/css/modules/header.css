@@ -278,3 +278,10 @@
     display: none;
   }
 }
+
+@media screen and (min-width: 1200px) {
+  .header .navigation svg {
+    width: 55px !important;
+    height: 55px !important;
+  }
+}

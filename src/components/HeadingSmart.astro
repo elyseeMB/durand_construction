@@ -12,17 +12,17 @@ const { title, description } = Astro.props;
 <div class="left">
   {
     title && (
-      <h3>
+      <h2>
         {strategyToUppercase(title!)}
         <br />
-      </h3>
+      </h2>
     )
   }
   {
     description && (
-      <h3>
+      <h2>
         <span>{strategyToUppercase(description)}</span>
-      </h3>
+      </h2>
     )
   }
 </div>
@@ -32,7 +32,7 @@ const { title, description } = Astro.props;
     grid-column: 1 / span 5;
     padding-block: var(--space);
 
-    h3 {
+    h2 {
       --line-height: 1.13;
       --size: 2.75rem;
       position: relative;
@@ -43,9 +43,25 @@ const { title, description } = Astro.props;
   }
 
   @media screen and (max-width: 590px) {
-    .left h3 {
+    .left h2 {
       --size: 1.75rem;
       font-size: var(--size);
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .left {
+      grid-column: 1 / span 5;
+      padding-block: var(--space);
+
+      h2 {
+        --line-height: 1.13;
+        --size: 3.75rem;
+        position: relative;
+        letter-spacing: -0.02em;
+        font-size: var(--size);
+        line-height: var(--line-height);
+      }
     }
   }
 </style>

@@ -165,4 +165,18 @@ footer .legacy h1 {
     text-align: center;
     font-size: 2.8rem;
   }
+
+  footer .legacy .copyright {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  footer .legacy h1 {
+    font-size: 7rem;
+  }
+
+  footer .legacy .copyright {
+    font-size: 1.35rem;
+  }
 }

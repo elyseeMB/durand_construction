@@ -69,6 +69,14 @@ const { description, classement, topic, labelForLink, href } = Astro.props;
         height: 100%;
         object-fit: cover;
       }
+
+      video {
+        aspect-ratio:  16 / 9;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
     }
 
     .text-description {
@@ -128,4 +136,16 @@ const { description, classement, topic, labelForLink, href } = Astro.props;
     }
 
   }
+
+  @media screen and (min-width: 1200px) {
+  .bottom .info  {
+    font-size: var(--h5);
+
+    span {
+      width: 15px;
+    }
+  }
+
+}
+
 </style>
