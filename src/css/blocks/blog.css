@@ -89,3 +89,36 @@
 
   margin-bottom: 1rem;
 }
+
+@media screen and (max-width: 590px) {
+  .description-view .text-description-view {
+    display: none;
+  }
+
+  .description-view {
+    display: block;
+  }
+
+  .description-view .approach {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 5rem;
+  }
+
+  .description-view .approach .list .topics {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding-bottom: var(--space-3);
+  }
+
+  .description-view .approach ul {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    line-height: 1.3;
+  }
+}

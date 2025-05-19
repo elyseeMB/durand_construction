@@ -1,0 +1,5 @@
+@media screen and (max-width: 590px) {
+  .lightbox-overlay {
+    padding: 5rem;
+  }
+}

@@ -213,6 +213,7 @@ export function Lightbox() {
         }}
       >
         <button
+          className="lightbox__button"
           onClick={closeLightbox}
           style={{
             position: "absolute",
