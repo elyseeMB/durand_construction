@@ -19,24 +19,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4 # ✅ Version 4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3 # ✅ Version 3 (dernière stable)
         with:
           node-version: 18
-          cache: "npm"
+          cache: "pnpm"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2 # ✅ Version 2
+        with:
+          version: 8
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
+        uses: actions/upload-pages-artifact@v3 # ✅ Version 3 (obligatoire)
 
   deploy:
     needs: build
@@ -47,4 +50,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v4 # ✅ Version 4
