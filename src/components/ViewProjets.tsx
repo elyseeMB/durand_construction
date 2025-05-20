@@ -10,70 +10,160 @@ type PropsData = {
 
 type Props = {
   data: PropsData[];
+  allYears: string[];
+  allPostsByYear: {
+    [key: string]: Post[];
+  };
 };
+
+type Post = CollectionEntry<"blog">;
+// Interface pour définir la structure des posts par année
+interface PostsByYearType {
+  [key: string]: Post[];
+}
+
+// Fonction pour regrouper les posts par année
+function groupPostsByYear(posts: Post[]): PostsByYearType {
+  const postsByYear: PostsByYearType = {};
+
+  posts.forEach((post) => {
+    if (!post.data.pubDate) return;
+
+    const date = new Date(post.data.pubDate);
+    const year = date.getFullYear().toString();
+
+    if (!postsByYear[year]) {
+      postsByYear[year] = [];
+    }
+
+    postsByYear[year].push(post);
+  });
+
+  // Trier les posts de chaque année (du plus récent au plus ancien)
+  Object.keys(postsByYear).forEach((year) => {
+    postsByYear[year].sort((a, b) => {
+      if (!a.data.pubDate) return 1;
+      if (!b.data.pubDate) return -1;
+      return (
+        new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+      );
+    });
+  });
+
+  return postsByYear;
+}
 
 export function ViewProjets({ data }: Props) {
   const onlyTaxonomyWithPosts = data.filter((d) =>
     d.posts.some((post) => post !== null)
   );
 
+  // Obtenir toutes les années disponibles à partir de tous les posts
+  const allPosts = onlyTaxonomyWithPosts.flatMap((tax) => tax.posts);
+  const postsByYear = groupPostsByYear(allPosts);
+  const availableYears = Object.keys(postsByYear).sort((a, b) => +b - +a); // Tri décroissant (plus récent d'abord)
+
+  // État pour suivre l'année sélectionnée
+  const [selectedYear, setSelectedYear] = useState<string>(
+    availableYears[0] || new Date().getFullYear().toString()
+  );
+
   return (
     <>
       <div class="description-view">
+        <div class="year-selector">
+          {availableYears.map((year) => (
+            <button
+              class={year === selectedYear ? "year-btn active" : "year-btn"}
+              onClick={() => setSelectedYear(year)}
+            >
+              {year}
+            </button>
+          ))}
+        </div>
+
         <div class="approach">
-          <List data={onlyTaxonomyWithPosts} />
-
-          <div class="list">
-            <span class="period">2024</span>
-            <div class="topics">
-              <div class="taxonomy">MATÉRIAUX & TECHNIQUES</div>
-              <ul>
-                <li>Béton bas carbone : quelles solutions aujourd’hui ?</li>
-                <li>
-                  Bois, acier, terre crue : pourquoi nous diversifions les
-                  matériaux
-                </li>
-                <li>
-                  L’importance de la lumière naturelle dans nos constructions
-                </li>
-              </ul>
-            </div>
-
-            <div class="topics">
-              <div class="taxonomy">ARCHITECTURE & DESIGN</div>
-              <ul>
-                <li>5 tendances architecturales à suivre en 2025</li>
-                <li>L’architecture minimaliste : fonction et élégance</li>
-                <li>Comment concevoir un espace de vie fluide et harmonieux</li>
-              </ul>
-            </div>
-          </div>
+          <List
+            data={onlyTaxonomyWithPosts}
+            year={selectedYear}
+            postsByYear={postsByYear}
+          />
         </div>
       </div>
+
+      <style jsx>{`
+        .year-selector {
+          display: flex;
+          gap: 1rem;
+          margin-bottom: 2rem;
+        }
+
+        .year-btn {
+          padding: 0.5rem 1rem;
+          border: 1px solid var(--accents-3);
+          background: transparent;
+          border-radius: 4px;
+          cursor: pointer;
+          color: var(--accents-6);
+          transition: all 0.2s;
+        }
+
+        .year-btn:hover {
+          border-color: var(--durand-orange);
+          color: var(--durand-orange);
+        }
+
+        .year-btn.active {
+          background-color: var(--durand-orange);
+          color: white;
+          border-color: var(--durand-orange);
+        }
+      `}</style>
     </>
   );
 }
 
-function Topics({ name, posts }: { name: string; posts: PropsData["posts"] }) {
-  const [isMouseEnter, setIsMouseEnter] = useState(false);
-  const [image, setImage] = useState(null);
-  // console.log(posts);
+function Topics({
+  name,
+  posts,
+  year,
+}: {
+  name: string;
+  posts: Post[];
+  year: string;
+}) {
+  const [isMouseEnter, setIsMouseEnter] = useState<boolean>(false);
+  const [image, setImage] = useState<string | null>(null);
 
-  // console.log(isMouseEnter, image);
+  // Filtrer les posts par année sélectionnée
+  const postsBySelectedYear = posts.filter((post) => {
+    if (!post.data.pubDate) return false;
+    const postYear = new Date(post.data.pubDate).getFullYear().toString();
+    return postYear === year;
+  });
+
+  // Trier les posts par date (du plus récent au plus ancien)
+  const sortPosts = postsBySelectedYear.sort((a, b) => {
+    if (!a.data.pubDate) return 1;
+    if (!b.data.pubDate) return -1;
+    return (
+      new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+    );
+  });
+
+  // Ne pas afficher la catégorie si elle n'a pas de posts pour l'année sélectionnée
+  if (sortPosts.length === 0) return null;
 
   return (
     <div class="topics">
       <div class="taxonomy">{strategyToUppercase(name)} →</div>
-
       <ul>
-        {posts?.map((post) => (
+        {sortPosts.map((post) => (
           <li
             data-image={post.data.thumbnail}
             onMouseEnter={(ev) => {
               setIsMouseEnter(ev.isTrusted);
-              setImage(
-                (ev.target as HTMLLIElement).getAttribute("data-image")!
-              );
+              setImage((ev.target as HTMLLIElement).getAttribute("data-image"));
             }}
             onMouseLeave={(ev) => {
               setIsMouseEnter(false);
@@ -93,12 +183,20 @@ function Topics({ name, posts }: { name: string; posts: PropsData["posts"] }) {
   );
 }
 
-function List({ data }: { data: PropsData[] }) {
+function List({
+  data,
+  year,
+  postsByYear,
+}: {
+  data: PropsData[];
+  year: string;
+  postsByYear: PostsByYearType;
+}) {
   return (
     <div class="list">
-      <span class="period">2025</span>
+      <span class="period">{year}</span>
       {data.map((item) => (
-        <Topics name={item.taxonomy} posts={item.posts} />
+        <Topics name={item.taxonomy} posts={item.posts} year={year} />
       ))}
     </div>
   );

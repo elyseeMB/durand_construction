@@ -1,6 +1,7 @@
 ---
 title: "Les coulisses d’un projet : de la maquette au permis de construire"
 taxonomies: ["projets-realisations"]
+pubDate: 2025-01-20
 author: ben-holmes
 thumbnail: "https://freight.cargo.site/w/600/q/75/i/5597aa1debf0104c7be6c763db25596a06bf07ae8ab6ddadfdb62fc779715a04/WhatsApp-Image-2024-04-30-at-3.44.56-PM.jpg"
 ---

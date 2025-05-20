@@ -7,6 +7,23 @@ import { date } from "astro:schema";
 import { ViewProjets } from "../components/ViewProjets.tsx";
 import BottomPage from "../components/blocks/BottomPage.astro";
 import Heading from "../components/Heading.astro";
+import type { CollectionEntry } from "astro:content";
+
+type PropsData = {
+  taxonomy: string;
+  posts: CollectionEntry<"blog">[];
+};
+
+type Props = {
+  data: PropsData[];
+};
+
+type Post = CollectionEntry<"blog">;
+
+interface PostsByYearType {
+  [key: string]: Post[];
+}
+
 const taxonomies = await getCollection("taxonomies");
 const posts = await getCollection("blog");
 
@@ -14,17 +31,65 @@ function getPostsByTaxonomy(id: string) {
   return posts.filter((post) => post.data.taxonomies?.some((t) => t.id === id));
 }
 
-const taxonomiesWithPosts = taxonomies.map((taxonomy) => ({
-  taxonomy: taxonomy.data.name,
-  posts: getPostsByTaxonomy(taxonomy.id),
-}));
+// Fonction pour regrouper les posts par année
+function groupPostsByYear(posts: Post[]): PostsByYearType {
+  const postsByYear: PostsByYearType = {};
 
-// console.log(taxonomiesWithPosts);
+  posts.forEach((post) => {
+    if (!post.data.pubDate) return;
+
+    const date = new Date(post.data.pubDate);
+    const year = date.getFullYear();
+
+    if (!postsByYear[year]) {
+      postsByYear[year] = [];
+    }
+
+    postsByYear[year].push(post);
+  });
+
+  // Trier les posts de chaque année (du plus récent au plus ancien)
+  Object.keys(postsByYear).forEach((year) => {
+    postsByYear[year].sort((a, b) => {
+      if (!a.data.pubDate) return 1;
+      if (!b.data.pubDate) return -1;
+
+      return (
+        new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+      );
+    });
+  });
+
+  return postsByYear;
+}
+
+// Récupérer les taxonomies avec leurs posts
+const taxonomiesWithPosts = taxonomies.map((taxonomy) => {
+  const taxonomyPosts = getPostsByTaxonomy(taxonomy.id);
+
+  return {
+    taxonomy: taxonomy.data.name,
+    id: taxonomy.id,
+    posts: taxonomyPosts,
+    postsByYear: groupPostsByYear(taxonomyPosts),
+    // Obtenir les années triées (plus récent d'abord)
+    years: Object.keys(groupPostsByYear(taxonomyPosts)).sort((a, b) => b - a),
+  };
+});
+
+// Créer également une version avec tous les posts groupés par année
+const allPostsByYear = groupPostsByYear(posts);
+const allYears = Object.keys(allPostsByYear).sort((a, b) => b - a);
+
+// Filtrer les taxonomies qui ont au moins un post
+const onlyTaxonomyWithPosts = taxonomiesWithPosts.filter(
+  (tax) => tax.posts.length > 0
+);
 
 const seo = {
   title: "Blog – Conseils & Actualités",
   description:
-    "Entre idées, chantiers et innovations : suivez notre actualité au cœur de l’architecture et du bâtiment.",
+    "Entre idées, chantiers et innovations : suivez notre actualité au cœur de l'architecture et du bâtiment.",
   image: "https://durand-construction.com/og-image.jpg",
   url: Astro.url.href,
 };
@@ -35,120 +100,21 @@ const seo = {
     <div class="container">
       <Heading
         title="ENTRE IDÉES, CHANTIERS ET INNOVATIONS"
-        description="SUIVEZ NOTRE ACTUALITÉ AU CŒUR DE L’ARCHITECTURE ET DU BÂTIMENT"
+        description="SUIVEZ NOTRE ACTUALITÉ AU CŒUR DE L'ARCHITECTURE ET DU BÂTIMENT"
       />
       <BottomPage
         topic="articles"
         classement="4.0"
-        description="nous vous partageons ici l’envers du décor, les tendances qui nous animent et notre approche sur la manière de bâtir intelligemment."
+        description="nous vous partageons ici l'envers du décor, les tendances qui nous animent et notre approche sur la manière de bâtir intelligemment."
       >
-        <ViewProjets client:load data={taxonomiesWithPosts} />
+        <!-- Passer les données organisées par taxonomie et par année au composant -->
+        <ViewProjets
+          client:load
+          data={onlyTaxonomyWithPosts}
+          allYears={allYears}
+          allPostsByYear={allPostsByYear}
+        />
       </BottomPage>
     </div>
   </section>
 </Layout>
-
-<!-- <style>
-  .description {
-    padding: 0;
-    margin: 0;
-    display: grid;
-    position: relative;
-    grid-template-columns: repeat(5, 1fr);
-  }
-
-  .description .arrow {
-    letter-spacing: -0.02em;
-    font-size: 2.75rem;
-    line-height: 1.13;
-    grid-column: 1;
-  }
-
-  .description .left {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    grid-column: 2 / span 2;
-    z-index: 1;
-
-    .heading-primary {
-      color: var(--accents-7);
-    }
-
-    .heading-secondary {
-      font-size: 0.8rem;
-      color: var(--accents-6);
-    }
-  }
-
-  .description .approach {
-    display: flex;
-    gap: 2.5rem;
-    flex-direction: column;
-    justify-content: space-between;
-    grid-column: 2 / span 2;
-
-    .list {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .list span.period {
-      color: var(--durand-orange);
-      font-weight: 700;
-    }
-
-    .list .topics {
-      color: var(--accents-8);
-      font-size: 0.8rem;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.3rem;
-    }
-
-    .list .topics ul {
-      width: 100%;
-
-      & > * {
-        color: var(--accents-6);
-        margin-bottom: 0.8rem;
-        cursor: pointer;
-
-        &:hover {
-          color: var(--durand-orange);
-          text-decoration: underline;
-        }
-      }
-    }
-  }
-
-  .description .text-description {
-    position: fixed;
-    grid-column: 4 / span 3;
-    align-self: start;
-
-    img {
-      width: 200px;
-      object-fit: cover;
-      z-index: -10;
-    }
-  }
-
-  .description .text-description .thumbnail {
-    top: 2rem;
-  }
-
-  .description .text-description,
-  .approach {
-    padding-block: 6rem;
-  }
-
-  .description p {
-    font-size: 0.8rem;
-    color: var(--accents-6);
-
-    margin-bottom: 1rem;
-  }
-</style> -->

@@ -61,6 +61,34 @@
   }
 }
 
+.year-selector {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  grid-column: 2 / span 2;
+}
+
+.year-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--accents-3);
+  background: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--accents-6);
+  transition: all 0.2s;
+}
+
+.year-btn:hover {
+  border-color: var(--durand-orange);
+  color: var(--durand-orange);
+}
+
+.year-btn.active {
+  background-color: var(--durand-orange);
+  color: white;
+  border-color: var(--durand-orange);
+}
+
 .description-view .text-description-view {
   grid-column: 3;
   align-self: start;

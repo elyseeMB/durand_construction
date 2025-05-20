@@ -2,6 +2,7 @@
 title: "Pourquoi choisir un site statique ?"
 author: "durand-construction"
 thumbnail: "https://freight.cargo.site/w/500/q/75/i/d51e4f79905987a6ba75a8bd19182f66b984b9dc0af0a4dffd61964b28c11164/PW.SW.Gonville.224-copy.jpg"
+pubDate: 2025-05-20
 summary: "Durand Construction adopte un site statique pour sa rapidité, sa sécurité et sa simplicité. Grâce à une architecture moderne sans backend, notre site est plus performant, plus fiable et optimisé pour le référencement. Un choix stratégique pour une présence en ligne durable et efficace."
 isDraft: false
 taxonomies:

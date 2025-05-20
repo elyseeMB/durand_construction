@@ -5,6 +5,7 @@ import type { CollectionEntry } from "astro:content";
 import { getEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import { strategyToUppercase } from "../../helpers/dom.ts";
+import { undefined } from "astro:schema";
 
 interface Props {
   post: CollectionEntry<"blog">;
@@ -26,12 +27,12 @@ const { Content, headings } = await render(post);
 
 const {
   seo: seoProps,
-  slug,
   title,
   summary,
   taxonomies,
   thumbnail,
   author,
+  pubDate,
 } = post.data;
 
 const getTaxonomies = await Promise.all(
@@ -41,6 +42,11 @@ const getTaxonomies = await Promise.all(
       )
     : []
 );
+
+const formatDate = Intl.DateTimeFormat(undefined, {
+  dateStyle: "long",
+}).format(pubDate);
+const writer = await getEntry(author.collection, author.id);
 
 const metaData = {
   title: post.data.title,
@@ -70,6 +76,9 @@ const seo = seoProps ? seoProps : metaData;
               <div class="tag"> {taxonomy?.data.name} </div>
             ))
           }
+        </div>
+        <div class="meta">
+          Posté le {formatDate.toString()} - Par {writer?.data.name}
         </div>
       </div>
     </div>
@@ -111,6 +120,11 @@ const seo = seoProps ? seoProps : metaData;
     --paragraph-color: var(--accents-7);
     --small-size: 0.8rem;
     --border: var(--accents-2);
+  }
+
+  .meta {
+    color: var(--accents-7);
+    font-size: var(--paragarph-size);
   }
 
   blockquote {

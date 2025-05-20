@@ -1,6 +1,7 @@
 ---
 title: "Béton bas carbone : quelles solutions aujourd’hui ?"
 author: ben-holmes
+pubDate: 2025-05-02
 taxonomies: ["projets-realisations"]
 thumbnail: "https://freight.cargo.site/w/600/q/75/i/13959baccd0882a93967ed92da231fc20a5eb518f06858467d31745d70cb545e/Patchwork2.jpg"
 ---

@@ -2,6 +2,7 @@
 title: "Retour sur notre chantier de logements collectifs à
   Brazzaville"
 taxonomies: ["projets-realisations"]
+pubDate: 2024-03-20
 author: ben-holmes
 thumbnail: "https://freight.cargo.site/w/800/q/75/i/52239d604de74e2caf058a3abc5ea91292d3889cfd4101f67520953beda04d37/DST-WAIPUCABIN1018-3747-copy.jpg"
 ---
