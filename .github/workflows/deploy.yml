@@ -1,8 +1,8 @@
-name: Deploy to GitHub Pages
+name: Deploy Astro site to GitHub Pages
 
 on:
   push:
-    branches: [master] # ou main selon ta branche par défaut
+    branches: [master]
   workflow_dispatch:
 
 permissions:
@@ -18,31 +18,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v3
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: 18
           cache: "pnpm"
 
       - name: Install pnpm
         run: npm install -g pnpm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-
-      - name: Build with Astro
+      - name: Build
         run: pnpm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: ./dist
+          path: dist
 
   deploy:
     needs: build
