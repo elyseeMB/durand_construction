@@ -181,7 +181,7 @@ p,
   }
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1300px) {
   :root {
     --font-size-base: 1.2rem;
     --font-scale: 1.25;
