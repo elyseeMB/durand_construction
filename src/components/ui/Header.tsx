@@ -11,7 +11,7 @@ export function Header() {
       <div className="navigation">
         <div className="branding">
           <div className="logo">
-            <a href="/durand-construction/">
+            <a href="/durand_construction/">
               <svg
                 id="logo"
                 xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +38,7 @@ export function Header() {
             <div className="name">Nous sommes</div>
             <ul class="header-logo">
               <li>
-                <a href="/durand-construction/">DURAND CONSTRUCTION</a>
+                <a href="/durand_construction/">DURAND CONSTRUCTION</a>
               </li>
             </ul>
           </div>
@@ -47,13 +47,13 @@ export function Header() {
           <div className="name">Sitemap</div>
           <ul class="header-nav">
             <li>
-              <a href="/durand-construction/work">WORK,</a>
+              <a href="/durand_construction/work">WORK,</a>
             </li>
             <li>
-              <a href="/durand-construction/about">ABOUT,</a>
+              <a href="/durand_construction/about">ABOUT,</a>
             </li>
             <li>
-              <a href="/durand-construction/blog">BLOG</a>
+              <a href="/durand_construction/blog">BLOG</a>
             </li>
           </ul>
         </div>
