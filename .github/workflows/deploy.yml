@@ -1,3 +1,5 @@
+# Force rebuild - test
+
 name: Deploy to GitHub Pages
 
 on:
