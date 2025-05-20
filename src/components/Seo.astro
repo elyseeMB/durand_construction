@@ -10,8 +10,8 @@ interface Props {
 const {
   title = "Durand Construction - Architecture et Bâtiment Durable",
   description = "Durand Construction est spécialisée dans l'architecture moderne, la construction durable et les projets clés en main. Découvrez nos réalisations et services.",
-  image = "https://durand-construction.com/og-image.jpg",
-  url = "https://durand-construction.com",
+  image = `${Astro.url.href}og-image.jpg`,
+  url = "https://elyseemb.github.io/durand_construction/",
   typeContent = "website",
 } = Astro.props;
 
@@ -25,11 +25,16 @@ const fullTitle = `${title} | ${name}`;
 <meta name="description" content={description} />
 <link rel="canonical" href={url} />
 
-<link rel="icon" type="image/png" href="/favicon-512.png" sizes="512x512" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-<link rel="manifest" href="/site.webmanifest" />
-<link rel="sitemap" href="/sitemap-index.xml" />
+<link
+  rel="icon"
+  type="image/png"
+  href={`${Astro.url.href}favicon-512.png`}
+  sizes="512x512"
+/>
+<link rel="icon" type="image/svg+xml" href={`${Astro.url.href}favicon.svg`} />
+<link rel="apple-touch-icon" href={`${Astro.url.href}apple-touch-icon.png`} />
+<link rel="manifest" href={`${Astro.url.href}site.webmanifest`} />
+<link rel="sitemap" href={`${Astro.url.href}sitemap-index.xml`} />
 <meta name="theme-color" content="#1e1e1e" />
 
 <meta property="og:site_name" content={name} />
@@ -52,9 +57,9 @@ const fullTitle = `${title} | ${name}`;
     "@type": "LocalBusiness",
     "name": "Durand Construction",
     "description": "Entreprise d’architecture et de construction durable basée en France.",
-    "url": "https://durand-construction.com",
-    "logo": "https://durand-construction.com/logo.png",
-    "image": "https://durand-construction.com/og-image.jpg",
+    "url": "https://elyseemb.github.io/durand_construction/",
+    "logo": "https://elyseemb.github.io/durand_construction/logo.png",
+    "image": "https://elyseemb.github.io/durand_construction/og-image.jpg",
     "telephone": "+33 1 23 45 67 89",
     "email": "contact@durand-construction.com",
     "address": {
@@ -78,10 +83,10 @@ const fullTitle = `${title} | ${name}`;
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Durand Construction",
-    "url": "https://durand-construction.com",
+    "url": "https://elyseemb.github.io/durand_construction/",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://durand-construction.com/search?q={search_term_string}",
+      "target": "https://elyseemb.github.io/durand_construction/search?q={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   }

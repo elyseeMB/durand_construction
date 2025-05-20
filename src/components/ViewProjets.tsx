@@ -170,7 +170,9 @@ function Topics({
               setImage(null);
             }}
           >
-            <a href={`/blog/${post.id}`}>{post.data.title}</a>
+            <a href={`/durand-construction/blog/${post.id}`}>
+              {post.data.title}
+            </a>
           </li>
         ))}
       </ul>
