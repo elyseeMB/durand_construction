@@ -26,7 +26,7 @@ export default defineConfig({
   image: {
     service: passthroughImageService(),
   },
-  base: "/durand-construction/",
+  base: "/durand_construction/",
   integrations: [
     preact(),
     markdoc(),
