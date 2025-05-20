@@ -19,7 +19,10 @@ export default defineConfig({
     ],
   },
   // site: "https://durand-construction.com",
-  site: "https://eembouz.github.io/durand-construction/",
+  site: "https://elyseemb.github.io/durand_construction/",
+  build: {
+    assets: "_astro",
+  },
   image: {
     service: passthroughImageService(),
   },

@@ -24,7 +24,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8 # ou la version souhaitée
+          version: 8
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -37,6 +37,9 @@ jobs:
 
       - name: Build
         run: pnpm run build
+
+      - name: Add .nojekyll
+        run: touch dist/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
