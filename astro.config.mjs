@@ -18,10 +18,12 @@ export default defineConfig({
       "aa5f-102-129-78-29.ngrok-free.app",
     ],
   },
-  site: "https://durand-construction.com",
+  // site: "https://durand-construction.com",
+  site: "https://eembouz.github.io/durand-construction/",
   image: {
     service: passthroughImageService(),
   },
+  base: "/durand-construction/",
   integrations: [
     preact(),
     markdoc(),
